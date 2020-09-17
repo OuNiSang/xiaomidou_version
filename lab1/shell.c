@@ -86,6 +86,31 @@ int main() {
 //-
 
 char * skipChar(char * charPtr, char skip){
+
+	if (skip == NULL)
+	{
+		return charPtr;
+		/* return itself when is a NULL*/
+	}else if (skip == ' ')
+	{
+		while (*charPtr == ' ' || *(charPtr+1) == ' ')
+		{
+			charPtr++;
+		}
+		return charPtr;
+		/* skip all the ' ' and return the first char pointer */
+
+	}else{
+		while (charPtr != ' ')
+		{
+			charPtr++;
+		}
+		return charPtr;
+		/* skip to find the first char and return the fisrt ' ' pointer */
+	}
+
+
+
  // TODO Step 2: skip over instances of the char skip
  //    return input value of charPtr if *char is null char
 }
@@ -108,6 +133,24 @@ char * skipChar(char * charPtr, char skip){
 //-
 
 int splitCommandLine(char * commandBuffer, char* args[], int maxargs){
+
+	while (* commandBuffer == NULL)
+	{
+		if(*commandBuffer == ' ')
+		{
+			commandBuffer =	skipChar(commandBuffer, ' ');
+			/* skip all the space to find first char*/
+		}else{
+			args[maxargs] = commandBuffer;
+			commandBuffer =	skipChar(commandBuffer,' ');
+			*commandBuffer = NULL;
+			commandBuffer++
+			maxargs++;
+			/* put the first char address in the args, change the last space of char into NULL and point to the next one  */
+		}
+
+	}
+
    // TODO Step 2 split the command into words using only
    // the functions skipChar and strchr. You may use fprintf to report
    // errors that are encountered to stderr.
