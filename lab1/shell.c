@@ -52,10 +52,10 @@ int main() {
 	// TODO Step 2: call splitCommandLine with the right parameters
 
 	// Debugging for step 2
-	//printf("%d\n", nargs);
-	//int i;
-	//for (i = 0; i < nargs; i++){
-	//  printf("%d: %s\n",i,args[i]);
+	printf("%d\n", nargs);
+	int i;
+	for (i = 0; i < nargs; i++){
+	 printf("%d: %s\n",i,args[i]);
 	//}
 
 	// Execute the command
