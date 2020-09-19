@@ -45,30 +45,29 @@ int main() {
 
     while(fgets(commandBuffer,CMD_BUFFSIZE,stdin) != NULL){
 
-	// Remove newline at end of buffer
-	// TODO Step 2: remove newline from end of buffer
-	char *tmp = commandBuffer;
-	*(tmp+strlen(commandBuffer)-1) = NULL;
+		// Remove newline at end of buffer
+		// TODO Step 2: remove newline from end of buffer
+		char *tmp = commandBuffer;
+		*(tmp+strlen(commandBuffer)-1) = NULL;
 
-	// Split command line into words.
-	// TODO Step 2: call splitCommandLine with the right parameters
-	int nargs = splitCommandLine(commandBuffer,args,MAXARGS);
+		// Split command line into words.
+		// TODO Step 2: call splitCommandLine with the right parameters
+		int nargs = splitCommandLine(commandBuffer,args,MAXARGS);
 
-	// Debugging for step 2
-	printf("%d\n", nargs);
-	int i;
-	for (i = 0; i < nargs; i++){
-	 printf("%d: %s\n",i,args[i]);
-	//}
+		// Debugging for step 2
+		printf("%d\n", nargs);
+		int i;
+		for (i = 0; i < nargs; i++){
+	 		printf("%d: %s\n",i,args[i]);
 
-	// Execute the command
-	// Remember to check if there is a command (i.e. value of nargs)
-	// TODO: Step 3 call doCommand with the right arguments
+			// Execute the command
+			// Remember to check if there is a command (i.e. value of nargs)
+			// TODO: Step 3 call doCommand with the right arguments
 
-	// print prompt
-	printf("%%> ");
-	fflush(stdout);
-    }
+			// print prompt
+			printf("%%> ");
+			fflush(stdout);
+    	}
 	}
 }
 
@@ -175,13 +174,15 @@ int splitCommandLine(char * commandBuffer, char* args[], int maxargs){
 
 // cmdStruct type:
 // Associates a command name with a command handling function
+typedef void (*cmdType)(char * args[], int nargs);
 
 // TODO STEP 3b use the typedef above (Step 3a) to make a two element
 // struct. The first is a char * for the name of the command
 // the other is a function pointer for the command handling function
-// typedef struct {
-//
-// } typename;
+typedef struct {
+	char *cmdName;
+	cmdType *cmdFuction;
+}cmdStruct;
 
 
 // prototypes for command handling functions
@@ -189,10 +190,10 @@ int splitCommandLine(char * commandBuffer, char* args[], int maxargs){
 // for each command handling function
 
 // Array that provides the list commands and functions
-// must be terminated by {NULL, NULL} 
+// must be terminated by {NULL, NULL}
 // in a real shell, this would be a hashtable.
 
-// TODO Step 4a: add a global array of 
+// TODO Step 4a: add a global array of
 // the type above that contains initializers
 // of strings and command handling funciton names
 
