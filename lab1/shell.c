@@ -61,8 +61,9 @@ int main() {
 	 		printf("%d: %s\n",i,args[i]);
 
 			// Execute the command
-			// Remember to check if there is a command (i.e. value of nargs)
 			// TODO: Step 3 call doCommand with the right arguments
+			// Remember to check if there is a command (i.e. value of nargs)
+			doCommand(args[i], nargs);
 
 			// print prompt
 			printf("%%> ");
@@ -193,6 +194,13 @@ typedef struct {
 // must be terminated by {NULL, NULL}
 // in a real shell, this would be a hashtable.
 
+cmdStruct commandArrayName[] = {
+	{"exit", exitFunc}
+	{NULL, NULL}
+};
+
+
+
 // TODO Step 4a: add a global array of
 // the type above that contains initializers
 // of strings and command handling funciton names
@@ -241,7 +249,9 @@ void doCommand(char * args[], int nargs){
 //-
 
 // TODO step 4b put command handling function for exit here
-// e.g. void exitFunc(char * args[], int nargs){
-// }
+void exitFunc(char * args[], int nargs){
+	exit(0);
+}
+
 
 // TODO step 6 put rest of command handling functions here
