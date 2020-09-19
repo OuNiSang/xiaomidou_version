@@ -23,7 +23,7 @@
 #include <string.h>
 #include <dirent.h>
 #include <sys/types.h>
-#include <pwd.h>
+// #include <pwd.h>
 #include <ctype.h>
 
 #define CMD_BUFFSIZE 1024
@@ -47,9 +47,12 @@ int main() {
 
 	// Remove newline at end of buffer
 	// TODO Step 2: remove newline from end of buffer
+	char *tmp = commandBuffer;
+	*(tmp+strlen(commandBuffer)-1) = NULL;
 
 	// Split command line into words.
 	// TODO Step 2: call splitCommandLine with the right parameters
+	int nargs = splitCommandLine(commandBuffer,args,MAXARGS);
 
 	// Debugging for step 2
 	printf("%d\n", nargs);
@@ -66,6 +69,7 @@ int main() {
 	printf("%%> ");
 	fflush(stdout);
     }
+	}
 }
 
 ////////////////////////////// String Handling ///////////////////////////////////
@@ -85,35 +89,28 @@ int main() {
 //		or skip is the null character
 //-
 
-char * skipChar(char * charPtr, char skip){
+char *skipChar(char * charPtr, char skip){
 
-	if (skip == NULL)
-	{
+	if (skip == NULL){
 		return charPtr;
 		/* return itself when is a NULL*/
-	}else if (skip == ' ')
-	{
-		while (*charPtr == ' ' || *(charPtr+1) == ' ')
-		{
+	}else if (skip == 0x20){
+		while (*charPtr == 0x20 || *(charPtr+1) == 0x20){
 			charPtr++;
 		}
 		return charPtr;
 		/* skip all the ' ' and return the first char pointer */
 
 	}else{
-		while (charPtr != ' ')
-		{
+		while (*charPtr != 0x20 && *charPtr != NULL){
 			charPtr++;
 		}
 		return charPtr;
 		/* skip to find the first char and return the fisrt ' ' pointer */
 	}
-
-
-
- // TODO Step 2: skip over instances of the char skip
- //    return input value of charPtr if *char is null char
 }
+//  // TODO Step 2: skip over instances of the char skip
+//  //    return input value of charPtr if *char is null char
 
 //+
 // Function:	splitCommandLine
@@ -134,22 +131,31 @@ char * skipChar(char * charPtr, char skip){
 
 int splitCommandLine(char * commandBuffer, char* args[], int maxargs){
 
-	while (* commandBuffer == NULL)
+	int counter = 0;
+
+	while (*commandBuffer != NULL)
 	{
-		if(*commandBuffer == ' ')
+		if(*commandBuffer == 0x20)
 		{
-			commandBuffer =	skipChar(commandBuffer, ' ');
+			commandBuffer =	skipChar(commandBuffer, 0x20);
 			/* skip all the space to find first char*/
 		}else{
-			args[maxargs] = commandBuffer;
-			commandBuffer =	skipChar(commandBuffer,' ');
+			args[counter] = commandBuffer;
+			commandBuffer =	skipChar(commandBuffer, *commandBuffer);
 			*commandBuffer = NULL;
-			commandBuffer++
-			maxargs++;
+			commandBuffer++;
+			counter++;
 			/* put the first char address in the args, change the last space of char into NULL and point to the next one  */
 		}
 
 	}
+	if (counter > maxargs)
+	{
+		printf("args overflow");
+		/*check whether the args is overflowed*/
+	}
+
+	return counter;
 
    // TODO Step 2 split the command into words using only
    // the functions skipChar and strchr. You may use fprintf to report
