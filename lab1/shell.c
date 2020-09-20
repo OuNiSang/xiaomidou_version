@@ -31,7 +31,9 @@
 
 int splitCommandLine(char * commandBuffer, char* args[], int maxargs);
 void doCommand(char * args[], int nargs);
-struct cmdType commandArrayName[];
+void exitFunc(char * args[], int nargs);
+
+
 
 int main() {
 
@@ -43,13 +45,13 @@ int main() {
     // write to terminal until newline
     printf("%%> ");
     fflush(stdout);
-	
+
     while(fgets(commandBuffer,CMD_BUFFSIZE,stdin) != NULL){
 
 		// Remove newline at end of buffer
 		// TODO Step 2: remove newline from end of buffer
 		char *tmp = commandBuffer;
-		*(tmp+strlen(commandBuffer)-1) = NULL;
+		*(tmp+strlen(commandBuffer)-1) = '\0';
 
 		// Split command line into words.
 		// TODO Step 2: call splitCommandLine with the right parameters
@@ -64,7 +66,7 @@ int main() {
 			// Execute the command
 			// TODO: Step 3 call doCommand with the right arguments
 			// Remember to check if there is a command (i.e. value of nargs)
-			doCommand(args[i], nargs);
+			doCommand(args,nargs);
 
 			// print prompt
 			printf("%%> ");
@@ -92,7 +94,7 @@ int main() {
 
 char *skipChar(char * charPtr, char skip){
 
-	if (skip == NULL){
+	if (skip == '\0'){
 		return charPtr;
 		/* return itself when is a NULL*/
 	}else if (skip == 0x20){
@@ -103,7 +105,7 @@ char *skipChar(char * charPtr, char skip){
 		/* skip all the ' ' and return the first char pointer */
 
 	}else{
-		while (*charPtr != 0x20 && *charPtr != NULL){
+		while (*charPtr != 0x20 && *charPtr != '\0'){
 			charPtr++;
 		}
 		return charPtr;
@@ -134,7 +136,7 @@ int splitCommandLine(char * commandBuffer, char* args[], int maxargs){
 
 	int counter = 0;
 
-	while (*commandBuffer != NULL)
+	while (*commandBuffer != '\0')
 	{
 		if(*commandBuffer == 0x20)
 		{
@@ -143,7 +145,7 @@ int splitCommandLine(char * commandBuffer, char* args[], int maxargs){
 		}else{
 			args[counter] = commandBuffer;
 			commandBuffer =	skipChar(commandBuffer, *commandBuffer);
-			*commandBuffer = NULL;
+			*commandBuffer = '\0';
 			commandBuffer++;
 			counter++;
 			/* put the first char address in the args, change the last space of char into NULL and point to the next one  */
@@ -172,7 +174,7 @@ int splitCommandLine(char * commandBuffer, char* args[], int maxargs){
 // use in the structure immediately below.
 // See the description of the function prototypes at the bottom of
 // the file in the comments.
-typedef void (*cmdStruct)(char * args[], int nargs);
+typedef void (*cmdFuncPtr)(char * args[], int nargs);
 
 
 // cmdType type:
@@ -183,25 +185,28 @@ typedef void (*cmdStruct)(char * args[], int nargs);
 struct cmdType
 {
 	char *cmdName;
-	cmdStruct *cmdFunction;
+	cmdFuncPtr cmdFunction;
+	char *args;
+	int nargs;
 };
 
 // prototypes for command handling functions
 // TODO STEP 4b,6: add a function prototype
 // for each command handling function
+void callFunction(cmdFuncPtr func, char * args[], int nargs){
+	func(args,nargs);
+}
+
 // Array that provides the list commands and functions
 // must be terminated by {NULL, NULL}
 // in a real shell, this would be a hashtable.
-struct cmdType commandArrayName[] = {
-	{"exit",exitFunc},
-	{NULL,NULL}
-};
-
-
 // TODO Step 4a: add a global array of
 // the type above that contains initializers
 // of strings and command handling funciton names
-
+struct cmdType commandArrayName[] = {
+	{"exit", exitFunc},
+	{NULL,NULL}
+};
 
 //+
 // Function:	doCommand
@@ -219,27 +224,38 @@ struct cmdType commandArrayName[] = {
 
 void doCommand(char * args[], int nargs){
 
-	int ex = 0;
 	int counterC = 0;
 	int counterA = 0;
+	// FILE *outPutFile = fopen("test1.txt","w");
 
-	for (int i = 0; i < counterA; i++)
+	while (1)
 	{
-		while (ex != 1)
-		{
-			if (commandArrayName[counterC].cmdName == args[counterA]){
-				commandArrayName[counterC].cmdFunction;
-				ex = 1;
-				/* code */
-			}else{
-				counterC++;
-				/* code */
-			}
-			/* code */
+		if (commandArrayName[counterC].cmdName == NULL){
+			break;
+			/*hit NULL in commandArrayName*/
 		}
-		/* code */
+		if (counterA == nargs)
+		{
+			printf("command is not recongnized!\n");
+			break;
+			/*hit the end of array, print error*/
+		}
+		if (strcmp(commandArrayName[counterC].cmdName,args[counterA]) == 0){
+			printf("performing %s\n",commandArrayName[counterC].cmdName);
+			callFunction(commandArrayName[counterC].cmdFunction,
+						commandArrayName[counterC].args,
+						commandArrayName[counterC].args);
+			counterC = 0;
+			counterA++;
+			/* exicute the function and move on */
+		}else{
+			counterC++;
+			/* move to the next command */
+		}
 	}
-	
+	// fprintf(outPutFile,"%s\n","Test");
+	// fclose(outPutFile);
+	// /*generating test files*/
 
    // TODO Step 5 this function is small
    //  this is the command search loop
