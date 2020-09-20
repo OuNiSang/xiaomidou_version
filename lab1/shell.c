@@ -31,6 +31,7 @@
 
 int splitCommandLine(char * commandBuffer, char* args[], int maxargs);
 void doCommand(char * args[], int nargs);
+struct cmdType commandArrayName[];
 
 int main() {
 
@@ -42,7 +43,7 @@ int main() {
     // write to terminal until newline
     printf("%%> ");
     fflush(stdout);
-
+	
     while(fgets(commandBuffer,CMD_BUFFSIZE,stdin) != NULL){
 
 		// Remove newline at end of buffer
@@ -171,34 +172,30 @@ int splitCommandLine(char * commandBuffer, char* args[], int maxargs){
 // use in the structure immediately below.
 // See the description of the function prototypes at the bottom of
 // the file in the comments.
+typedef void (*cmdStruct)(char * args[], int nargs);
 
 
-// cmdStruct type:
+// cmdType type:
 // Associates a command name with a command handling function
-typedef void (*cmdType)(char * args[], int nargs);
-
 // TODO STEP 3b use the typedef above (Step 3a) to make a two element
 // struct. The first is a char * for the name of the command
 // the other is a function pointer for the command handling function
-typedef struct {
+struct cmdType
+{
 	char *cmdName;
-	cmdType *cmdFuction;
-}cmdStruct;
-
+	cmdStruct *cmdFunction;
+}
 
 // prototypes for command handling functions
 // TODO STEP 4b,6: add a function prototype
 // for each command handling function
-
 // Array that provides the list commands and functions
 // must be terminated by {NULL, NULL}
 // in a real shell, this would be a hashtable.
-
-cmdStruct commandArrayName[] = {
+struct cmdType commandArrayName[] = {
 	{"exit", exitFunc}
 	{NULL, NULL}
-};
-
+}
 
 
 // TODO Step 4a: add a global array of
@@ -221,6 +218,29 @@ cmdStruct commandArrayName[] = {
 //-
 
 void doCommand(char * args[], int nargs){
+
+	int ex = 0;
+	int counterC = 0;
+	int counterA = 0;
+
+	for (int i = 0; i < counterA; i++)
+	{
+		while (ex != 1)
+		{
+			if (commandArrayName[counterC].cmdName == args[counterA]){
+				commandArrayName[counterC].cmdFunction;
+				ex = 1;
+				/* code */
+			}else{
+				counterC++;
+				/* code */
+			}
+			/* code */
+		}
+		/* code */
+	}
+	
+
    // TODO Step 5 this function is small
    //  this is the command search loop
 }
