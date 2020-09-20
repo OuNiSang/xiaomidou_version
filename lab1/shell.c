@@ -23,7 +23,7 @@
 #include <string.h>
 #include <dirent.h>
 #include <sys/types.h>
-// #include <pwd.h>
+#include <pwd.h>
 #include <ctype.h>
 
 #define CMD_BUFFSIZE 1024
@@ -233,7 +233,7 @@ void doCommand(char * args[], int nargs){
 		if (commandArrayName[counterC].cmdName == NULL){
 			break;
 			/*hit NULL in commandArrayName*/
-		}
+	 	}
 		if (counterA == nargs)
 		{
 			printf("command is not recongnized!\n");
@@ -244,7 +244,7 @@ void doCommand(char * args[], int nargs){
 			printf("performing %s\n",commandArrayName[counterC].cmdName);
 			callFunction(commandArrayName[counterC].cmdFunction,
 						commandArrayName[counterC].args,
-						commandArrayName[counterC].args);
+						commandArrayName[counterC].nargs);
 			counterC = 0;
 			counterA++;
 			/* exicute the function and move on */
