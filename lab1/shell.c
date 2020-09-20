@@ -184,7 +184,7 @@ struct cmdType
 {
 	char *cmdName;
 	cmdStruct *cmdFunction;
-}
+};
 
 // prototypes for command handling functions
 // TODO STEP 4b,6: add a function prototype
@@ -193,9 +193,9 @@ struct cmdType
 // must be terminated by {NULL, NULL}
 // in a real shell, this would be a hashtable.
 struct cmdType commandArrayName[] = {
-	{"exit", exitFunc}
-	{NULL, NULL}
-}
+	{"exit",exitFunc},
+	{NULL,NULL}
+};
 
 
 // TODO Step 4a: add a global array of
