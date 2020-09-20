@@ -186,7 +186,7 @@ struct cmdType
 {
 	char *cmdName;
 	cmdFuncPtr cmdFunction;
-	char *args;
+	char **args;
 	int nargs;
 };
 
@@ -204,6 +204,7 @@ void callFunction(cmdFuncPtr func, char * args[], int nargs){
 // the type above that contains initializers
 // of strings and command handling funciton names
 struct cmdType commandArrayName[] = {
+	// {"pwd",pwdFunc},
 	{"exit", exitFunc},
 	{NULL,NULL}
 };
@@ -291,3 +292,28 @@ void exitFunc(char * args[], int nargs){
 
 
 // TODO step 6 put rest of command handling functions here
+void pwdFunc(char *arg[], int nargs){
+	char *cwd = getcwd(NULL, 0);
+	printf("%s\n",cwd);
+	free(cwd);
+}
+
+void cdFunc(char * args[], int nargs){
+	if (nargs == 1)
+	{
+		/*with only one performed*/
+	}else if (nargs == 0)
+	{
+		struct passwd *pw = getpwuid(getuid());
+		/*with no argument == home dir*/
+	}else
+	{
+		/* with mul arguments */
+	}
+
+}
+
+void lsFunc(char * args[], int nargs){
+
+}
+
