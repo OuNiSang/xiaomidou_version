@@ -32,6 +32,9 @@
 int splitCommandLine(char * commandBuffer, char* args[], int maxargs);
 void doCommand(char * args[], int nargs);
 void exitFunc(char * args[], int nargs);
+void pwdFunc(char *arg[], int nargs);
+void cdFunc(char * args[], int nargs);
+void lsFunc(char * args[], int nargs);
 
 
 
@@ -72,6 +75,15 @@ int main() {
 			printf("%%> ");
 			fflush(stdout);
     	}
+
+		if (nargs == 0)
+		{
+			printf("no input is found\n");
+			printf("%%> ");
+			fflush(stdout);
+			/* if there is no input, which nargs == 0, print this worning */
+		}
+		
 	}
 }
 
@@ -204,7 +216,10 @@ void callFunction(cmdFuncPtr func, char * args[], int nargs){
 // the type above that contains initializers
 // of strings and command handling funciton names
 struct cmdType commandArrayName[] = {
-	// {"pwd",pwdFunc},
+
+	{"ls", lsFunc},
+	{"cd", cdFunc},
+	{"pwd",pwdFunc},
 	{"exit", exitFunc},
 	{NULL,NULL}
 };
@@ -237,7 +252,7 @@ void doCommand(char * args[], int nargs){
 	 	}
 		if (counterA == nargs)
 		{
-			printf("command is not recongnized!\n");
+
 			break;
 			/*hit the end of array, print error*/
 		}
