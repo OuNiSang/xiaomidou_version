@@ -314,17 +314,30 @@ void pwdFunc(char *arg[], int nargs){
 }
 
 void cdFunc(char * args[], int nargs){
-	if (nargs == 1)
+	if (nargs != 0)
 	{
-		/*with only one performed*/
-	}else if (nargs == 0)
-	{
-		struct passwd *pw = getpwuid(getuid());
-		/*with no argument == home dir*/
+		int check = chdir(args + 1); // the next element in the args[0] is PATH
+		if (check != 0)
+		{
+			printf("Directory check failed");
+			/*chdir() returns none 0 values when it can not change*/
+		}else
+		{
+			printf("Dir change success");
+		}
+		/*If there is a PATH, process cd*/
 	}else
 	{
-		/* with mul arguments */
+		struct passwd *pw = getpwuid(getuid());
+		if (pw->pw_dir == NULL)
+		{
+			printf("Error: home directory is NULL");
+			/*report an error when home directory is NULL*/
+		}
+		
 	}
+	
+	
 
 }
 
