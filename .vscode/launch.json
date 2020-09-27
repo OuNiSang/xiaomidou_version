@@ -12,6 +12,7 @@
       "environment": [],
       "externalConsole": false,
       "MIMode": "gdb",
+      "internalConsoleOptions": "openOnSessionStart",//调试时跳转到内部调试台
       "setupCommands": [
         {
           "description": "Enable pretty-printing for gdb",
@@ -20,7 +21,11 @@
         }
       ],
       "preLaunchTask": "g++ build active file",
-      "miDebuggerPath": "/usr/bin/gdb"
+      "miDebuggerPath": "/usr/bin/gdb",
+      "sourceFileMap": {
+        "/mnt/c": "C:\\"//地址转换
+      
+      }
     }
   ]
 }
