@@ -35,7 +35,7 @@ void exitFunc(char * args[], int nargs);
 void pwdFunc(char *arg[], int nargs);
 void cdFunc(char * args[], int nargs);
 void lsFunc(char * args[], int nargs);
-int checkDotDocument(const struct dirent* file, struct dirent *compareList, int numOfList);
+int checkDotDocument(struct dirent *passInFile);
 
 
 int main() {
@@ -312,44 +312,56 @@ void pwdFunc(char *arg[], int nargs){
 }
 
 void cdFunc(char * args[], int nargs){
-	if (nargs != 0)
+
+	// printf("%d",nargs);
+	struct passwd *pw = getpwuid(getuid());
+	if (pw->pw_dir == NULL)
 	{
-		int check = chdir(*(args + 1)); // the next element in the args[0] is PATH
-		if (check != 0)
+		printf("Error: home directory is NULL\n");
+		/*report an error when home directory is NULL*/
+	}else
+	{
+		if (chdir(pw->pw_dir) == 0)
+		{
+			printf("%s\n", pw->pw_dir);
+			printf("Dir change success\n");
+			/* code */
+		}else
 		{
 			printf("Directory check failed\n");
 			/*chdir() returns none 0 values when it can not change*/
-		}else
-		{
-			printf("Dir change success\n");
-		}
-		/*If there is a PATH, process cd*/
-	}else
-	{
-		struct passwd *pw = getpwuid(getuid());
-		if (pw->pw_dir == NULL)
-		{
-			printf("Error: home directory is NULL\n");
-			/*report an error when home directory is NULL*/
 		}
 	}
 }
 
 void lsFunc(char * args[], int nargs){
+	
+	printf("the numbers of nargs in ls function: %d\n",nargs);
 	struct dirent **namelist;
 	int numEnts = scandir(".", &namelist, NULL, NULL);
-	char *temp;
+	// printf("numbers %s\n",*(args+1));
 
-	if (nargs == 0)
+	if (nargs == 1)
 	{
-		numEnts = scandir(".", &namelist, checkDotDocument(args,namelist,nargs), NULL);
+		int count = 0;
+		while (count < numEnts)
+		{
+		printf("there are %d in the list\n checking the number %d files\n",numEnts,count+1);
+		numEnts = scandir(".", &namelist, checkDotDocument(*(namelist+count)), NULL);
+		count++;
+			/* code */
+		}
 		/* code */
 	}else if (*(args+1) == "-a")
 	{
+		printf("there are %d in the list\n",numEnts);
 		numEnts = scandir(".", &namelist, NULL, NULL);
 		/* code */
 	}
+
+	// printf("there are %d in the list\n",numEnts);
 	int i = 0;
+	char *temp;
 	for (i = 0; i < numEnts; i++)
 	{
 		temp = namelist[i]->d_name;
@@ -358,25 +370,21 @@ void lsFunc(char * args[], int nargs){
 	}
 }
 
-int checkDotDocument(const struct dirent* file, struct dirent *compareList, int numOfList){
+int checkDotDocument(struct dirent *passInFile){
 
+	char *dot = ".";
 	int temp = 0;
-	int count = 0;
-
-	while (count < numOfList)
+	// printf("checking file %s\n", passInFile->d_name);
+	if (strncmp(passInFile->d_name,dot,1) != 0)
 	{
-		if (file->d_name == compareList[count].d_name)
-		{
-			temp = 1;
-			return temp;
-			/* code */
-		}else
-		{
-			count++;
-			/* code */
-		}
+		temp = 1;
+		printf("dot file sucessfuly checked\n");
 		/* code */
+	}else
+	{
+		printf("not a dot files\n");
 	}
 	
-	return temp;
+	
+	return (temp);
 }
