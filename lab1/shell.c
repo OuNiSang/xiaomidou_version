@@ -35,7 +35,7 @@ void exitFunc(char * args[], int nargs);
 void pwdFunc(char *arg[], int nargs);
 void cdFunc(char * args[], int nargs);
 void lsFunc(char * args[], int nargs);
-int checkDotDocument(struct dirent *passInFile);
+int checkDotDocument(const struct dirent *passInFile);
 
 
 int main() {
@@ -69,7 +69,7 @@ int main() {
 			// Execute the command
 			// TODO: Step 3 call doCommand with the right arguments
 			// Remember to check if there is a command (i.e. value of nargs)
-			doCommand(args,nargs);
+			doCommand(args + i,nargs);
 
 			// print prompt
 			printf("%%> ");
@@ -318,7 +318,7 @@ void cdFunc(char * args[], int nargs){
 	if (pw->pw_dir == NULL)
 	{
 		printf("Error: home directory is NULL\n");
-		/*report an error when home directory is NULL*/
+		/*report an error when home directory is NULL*/	
 	}else
 	{
 		if (chdir(pw->pw_dir) == 0)
@@ -343,14 +343,8 @@ void lsFunc(char * args[], int nargs){
 
 	if (nargs == 1)
 	{
-		int count = 0;
-		while (count < numEnts)
-		{
-		printf("there are %d in the list\n checking the number %d files\n",numEnts,count+1);
-		numEnts = scandir(".", &namelist, checkDotDocument(*(namelist+count)), NULL);
-		count++;
-			/* code */
-		}
+		printf("there are %d in the list\n",numEnts);
+		numEnts = scandir(".", &namelist, checkDotDocument, NULL);
 		/* code */
 	}else if (*(args+1) == "-a")
 	{
@@ -370,21 +364,18 @@ void lsFunc(char * args[], int nargs){
 	}
 }
 
-int checkDotDocument(struct dirent *passInFile){
+int checkDotDocument(const struct dirent *passInFile){
 
-	char *dot = ".";
-	int temp = 0;
-	// printf("checking file %s\n", passInFile->d_name);
-	if (strncmp(passInFile->d_name,dot,1) != 0)
+	// printf("\nchecing whether %s is a dot files\n", passInFile->d_name);
+	int boolen = 0;
+	if (passInFile->d_name[0] != '.')
 	{
-		temp = 1;
-		printf("dot file sucessfuly checked\n");
-		/* code */
+		// printf("Not a dot file\n");
+		boolen = 1;
 	}else
 	{
-		printf("not a dot files\n");
+		// printf("Is a dot file\n");
 	}
 	
-	
-	return (temp);
+	return boolen;
 }
