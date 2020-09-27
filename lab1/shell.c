@@ -332,7 +332,6 @@ void cdFunc(char * args[], int nargs){
 			printf("Error: home directory is NULL\n");
 			/*report an error when home directory is NULL*/
 		}
-		
 	}
 }
 
@@ -350,14 +349,13 @@ void lsFunc(char * args[], int nargs){
 		numEnts = scandir(".", &namelist, NULL, NULL);
 		/* code */
 	}
-	
-	for (int i = 0; i < numEnts; i++)
+	int i = 0;
+	for (i = 0; i < numEnts; i++)
 	{
 		temp = namelist[i]->d_name;
 		printf("%s\n", temp);
 		/* code */
 	}
-	
 }
 
 int checkDotDocument(const struct dirent* file, struct dirent *compareList, int numOfList){
