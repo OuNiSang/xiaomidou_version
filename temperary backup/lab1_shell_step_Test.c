@@ -35,8 +35,8 @@ void exitFunc(char * args[], int nargs);
 void pwdFunc(char *arg[], int nargs);
 void cdFunc(char * args[], int nargs);
 void lsFunc(char * args[], int nargs);
-int checkDotDocument(char* file, struct dirent *compareList, int numOfList);
 void scriptFun(char * args[], int nargs);
+int checkDotDocument(const struct dirent *passInFile);
 
 FILE *testFile;
 char *testFileName;
@@ -53,12 +53,16 @@ int main() {
     printf("%%> ");
     fflush(stdout);
 
-
     while(fgets(commandBuffer,CMD_BUFFSIZE,stdin) != NULL){
 
-		//Record command into testfiles
-		// fprintf(testFile, "%s", commandBuffer);
 
+		if (isTestScriptOn){
+			freopen(testFileName,"a",testFile);
+			fprintf(testFile, "%s", commandBuffer);
+			fclose(testFile);
+			/* code */
+		}
+		
 		// Remove newline at end of buffer
 		// TODO Step 2: remove newline from end of buffer
 		char *tmp = commandBuffer;
@@ -69,28 +73,32 @@ int main() {
 		int nargs = splitCommandLine(commandBuffer,args,MAXARGS);
 
 		// Debugging for step 2
-		printf("%d\n", nargs);
+		// printf("%d\n", nargs);
 		int i;
 		for (i = 0; i < nargs; i++){
+			freopen(testFileName,"a",testFile);
 	 		printf("%d: %s\n",i,args[i]);
-
 
 			// Execute the command
 			// TODO: Step 3 call doCommand with the right arguments
 			// Remember to check if there is a command (i.e. value of nargs)
-			doCommand(args,nargs);
+			doCommand(args + i,nargs);
 
 			// print prompt
 			printf("%%> ");
+			fprintf(testFile,"%%>");
+			fclose(testFile);
 			fflush(stdout);
     	}
 
 		if (nargs == 0)
 		{
+			freopen(testFileName,"a",testFile);
 			printf("no input is found\n");
 			fprintf(testFile,"no input is found\n");
 			printf("%%> ");
 			fflush(stdout);
+			fclose(testFile);
 			/* if there is no input, which nargs == 0, print this worning */
 		}
 		
@@ -156,6 +164,8 @@ char *skipChar(char * charPtr, char skip){
 
 int splitCommandLine(char * commandBuffer, char* args[], int maxargs){
 
+	freopen(testFileName,"a",testFile);
+
 	int counter = 0;
 
 	while (*commandBuffer != '\0')
@@ -176,12 +186,12 @@ int splitCommandLine(char * commandBuffer, char* args[], int maxargs){
 	}
 	if (counter > maxargs)
 	{
-		printf("args overflow\n");
-		fprintf(testFile,"args overflow\n");
-
+		printf("args overflow");
+		fprintf(testFile,"args overflow");
 		/*check whether the args is overflowed*/
 	}
 
+	fclose(testFile);
 	return counter;
 
    // TODO Step 2 split the command into words using only
@@ -229,7 +239,7 @@ void callFunction(cmdFuncPtr func, char * args[], int nargs){
 // of strings and command handling funciton names
 struct cmdType commandArrayName[] = {
 
-	{"script", scriptFun},
+	{"script",scriptFun},
 	{"ls", lsFunc},
 	{"cd", cdFunc},
 	{"pwd", pwdFunc},
@@ -250,8 +260,10 @@ struct cmdType commandArrayName[] = {
 //
 // Returns	nothing (void)
 //-
+
 void doCommand(char * args[], int nargs){
 
+	freopen(testFileName,"a",testFile);
 	int counterC = 0;
 	int counterA = 0;
 	// FILE *outPutFile = fopen("test1.txt","w");
@@ -280,9 +292,7 @@ void doCommand(char * args[], int nargs){
 			/* move to the next command */
 		}
 	}
-	// fprintf(outPutFile,"%s\n","Test");
-	// fclose(outPutFile);
-	// /*generating test files*/
+	fclose(testFile);
 
    // TODO Step 5 this function is small
    //  this is the command search loop
@@ -310,18 +320,12 @@ void doCommand(char * args[], int nargs){
 //
 // Returns	nothing (void)
 //-
-// TODO step 4b put command handling function for exit here
 
-//+
-// Function:	exitFuncton
-//
-// Purpose:
-//-
+// TODO step 4b put command handling function for exit here
 void exitFunc(char * args[], int nargs){
-	if (isTestScriptOn == 1)
-	{
+
+	if (isTestScriptOn == 1){
 		printf("script is done, file is %s\n", testFileName);
-		fclose(testFile);
 		/*close the recoring script is script mode is on*/
 	}
 	
@@ -329,85 +333,76 @@ void exitFunc(char * args[], int nargs){
 }
 
 
-//+
-// Function:	exitFuncton
-//
-// Purpose:
-//-
+// TODO step 6 put rest of command handling functions here
 void pwdFunc(char *arg[], int nargs){
+	freopen(testFileName,"a",testFile);
 
 	char *cwd = getcwd(NULL, 0);
 	printf("%s\n",cwd);
-	fprintf(testFile,"%s\n",cwd);
 	free(cwd);
+
+	fclose(testFile);
 }
 
-//+
-// Function:	exitFuncton
-//
-// Purpose:
-//-
 void cdFunc(char * args[], int nargs){
-	if (nargs != 0)
+
+	freopen(testFileName,"a",testFile);
+
+	// printf("%d",nargs);
+	struct passwd *pw = getpwuid(getuid());
+	if (pw->pw_dir == NULL)
 	{
-		int check = chdir(*(args + 1)); // the next element in the args[0] is PATH
-		if (check != 0)
-		{
-			printf("Directory check failed\n");
-			fprintf(testFile,"Directory check failed\n");
-			/*chdir() returns none 0 values when it can not change*/
-		}else
-		{
-			printf("Dir change success\n");
-			fprintf(testFile,"Dir change success\n");
-		}
-		/*If there is a PATH, process cd*/
+		printf("Error: home directory is NULL\n");
+		fprintf(testFile,"Error: home directory is NULL\n");
+		/*report an error when home directory is NULL*/	
 	}else
 	{
-		struct passwd *pw = getpwuid(getuid());
-		if (pw->pw_dir == NULL)
+		if (chdir(pw->pw_dir) == 0)
 		{
-			printf("Error: home directory is NULL\n");
+			printf("%s\n", pw->pw_dir);
+			printf("Dir change success\n");
 			fprintf(testFile,"Dir change success\n");
-			/*report an error when home directory is NULL*/
+			/* code */
+		}else
+		{
+			printf("Directory check failed\n");
+			fprintf(testFile,"Dir change success\n");
+			/*chdir() returns none 0 values when it can not change*/
 		}
 	}
+	fclose(testFile);
 }
 
-//+
-// Function:	ls function
-//
-// Purpose:
-//-
 void lsFunc(char * args[], int nargs){
+	
+	// printf("the numbers of nargs in ls function: %d\n",nargs);
 	struct dirent **namelist;
 	int numEnts = scandir(".", &namelist, NULL, NULL);
-	char *temp;
+	// printf("numbers %s\n",*(args+1));
 
-	if (nargs == 0)
+	if (nargs == 1)
 	{
-		numEnts = scandir(".", &namelist, checkDotDocument(args,namelist,nargs), NULL);
+		// printf("there are %d in the list\n",numEnts);
+		numEnts = scandir(".", &namelist, checkDotDocument, NULL);
 		/* code */
 	}else if (*(args+1) == "-a")
 	{
+		// printf("there are %d in the list\n",numEnts);
 		numEnts = scandir(".", &namelist, NULL, NULL);
 		/* code */
 	}
+
+	// printf("there are %d in the list\n",numEnts);
 	int i = 0;
+	char *temp;
 	for (i = 0; i < numEnts; i++)
 	{
 		temp = namelist[i]->d_name;
 		printf("%s\n", temp);
-		fprintf(testFile,"%s\n",temp);
 		/* code */
 	}
 }
 
-//+
-// Function:	exitFuncton
-//
-// Purpose:
-//-
 void scriptFun(char * args[], int nargs){
 
 	testFileName = *(args + 1);
@@ -415,35 +410,22 @@ void scriptFun(char * args[], int nargs){
 	isTestScriptOn = 1;
 
 	printf("script started, out put is %s\n",testFileName);
+	fclose(testFile);
 }
 
-//+
-// Function:	checkDotDocument function
-//
-// Purpose:
-// Parameters:
-//
-// Returns	int
-//-
-int checkDotDocument(char* file, struct dirent *compareList, int numOfList){
 
-	int temp = 0;
-	int count = 0;
+int checkDotDocument(const struct dirent *passInFile){
 
-	while (count < numOfList)
+	// printf("\nchecing whether %s is a dot files\n", passInFile->d_name);
+	int boolen = 0;
+	if (passInFile->d_name[0] != '.')
 	{
-		if (*(file) == compareList[count].d_name)
-		{
-			temp = 1;
-			return temp;
-			/* code */
-		}else
-		{
-			count++;
-			/* code */
-		}
-		/* code */
+		// printf("Not a dot file\n");
+		boolen = 1;
+	}else
+	{
+		// printf("Is a dot file\n");
 	}
 	
-	return temp;
+	return boolen;
 }

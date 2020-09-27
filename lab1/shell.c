@@ -257,7 +257,7 @@ void doCommand(char * args[], int nargs){
 			/*hit the end of array, print error*/
 		}
 		if (strcmp(commandArrayName[counterC].cmdName,args[counterA]) == 0){
-			printf("performing %s\n",commandArrayName[counterC].cmdName);
+			// printf("performing %s\n",commandArrayName[counterC].cmdName);
 			callFunction(commandArrayName[counterC].cmdFunction,args,nargs);
 			counterC = 0;
 			counterA++;
@@ -336,19 +336,19 @@ void cdFunc(char * args[], int nargs){
 
 void lsFunc(char * args[], int nargs){
 	
-	printf("the numbers of nargs in ls function: %d\n",nargs);
+	// printf("the numbers of nargs in ls function: %d\n",nargs);
 	struct dirent **namelist;
 	int numEnts = scandir(".", &namelist, NULL, NULL);
 	// printf("numbers %s\n",*(args+1));
 
 	if (nargs == 1)
 	{
-		printf("there are %d in the list\n",numEnts);
+		// printf("there are %d in the list\n",numEnts);
 		numEnts = scandir(".", &namelist, checkDotDocument, NULL);
 		/* code */
 	}else if (*(args+1) == "-a")
 	{
-		printf("there are %d in the list\n",numEnts);
+		// printf("there are %d in the list\n",numEnts);
 		numEnts = scandir(".", &namelist, NULL, NULL);
 		/* code */
 	}
