@@ -267,9 +267,6 @@ void doCommand(char * args[], int nargs){
 			/* move to the next command */
 		}
 	}
-	// fprintf(outPutFile,"%s\n","Test");
-	// fclose(outPutFile);
-	// /*generating test files*/
 
    // TODO Step 5 this function is small
    //  this is the command search loop
@@ -304,6 +301,7 @@ void exitFunc(char * args[], int nargs){
 }
 
 
+
 // TODO step 6 put rest of command handling functions here
 void pwdFunc(char *arg[], int nargs){
 	char *cwd = getcwd(NULL, 0);
@@ -321,13 +319,15 @@ void cdFunc(char * args[], int nargs){
 		/*report an error when home directory is NULL*/	
 	}else
 	{
-		if (chdir(pw->pw_dir) == 0)
+		if (nargs == 1)
 		{
 			printf("%s\n", pw->pw_dir);
+			printf("Home dir change success\n");
+			/* print out the home PATH */
+		}else if (chdir(args[1]) == 0){
 			printf("Dir change success\n");
-			/* code */
-		}else
-		{
+			/* if there has another argument, change to that argument */
+		}else{
 			printf("Directory check failed\n");
 			/*chdir() returns none 0 values when it can not change*/
 		}
@@ -336,46 +336,38 @@ void cdFunc(char * args[], int nargs){
 
 void lsFunc(char * args[], int nargs){
 	
-	// printf("the numbers of nargs in ls function: %d\n",nargs);
 	struct dirent **namelist;
 	int numEnts = scandir(".", &namelist, NULL, NULL);
-	// printf("numbers %s\n",*(args+1));
 
 	if (nargs == 1)
 	{
-		// printf("there are %d in the list\n",numEnts);
 		numEnts = scandir(".", &namelist, checkDotDocument, NULL);
-		/* code */
+		/* use checkDotDoucment to skip all the dotDocument and then store in the list */
+
 	}else if (*(args+1) == "-a")
 	{
-		// printf("there are %d in the list\n",numEnts);
 		numEnts = scandir(".", &namelist, NULL, NULL);
-		/* code */
+		/* just fprint all the document under the list */
 	}
 
-	// printf("there are %d in the list\n",numEnts);
 	int i = 0;
 	char *temp;
 	for (i = 0; i < numEnts; i++)
 	{
 		temp = namelist[i]->d_name;
 		printf("%s\n", temp);
-		/* code */
+		/* print out all the document that stored in the nameList */
 	}
 }
 
 int checkDotDocument(const struct dirent *passInFile){
 
-	// printf("\nchecing whether %s is a dot files\n", passInFile->d_name);
 	int boolen = 0;
 	if (passInFile->d_name[0] != '.')
 	{
-		// printf("Not a dot file\n");
+		/* return ture if it is not a dot document */
 		boolen = 1;
-	}else
-	{
-		// printf("Is a dot file\n");
 	}
-	
+
 	return boolen;
 }
