@@ -61,10 +61,10 @@ int main() {
 		int nargs = splitCommandLine(commandBuffer,args,MAXARGS);
 
 		// Debugging for step 2
-		printf("%d\n", nargs);
+		// printf("%d\n", nargs);
 		int i;
 		for (i = 0; i < nargs; i++){
-	 		printf("%d: %s\n",i,args[i]);
+	 		// printf("%d: %s\n",i,args[i]);
 
 			// Execute the command
 			// TODO: Step 3 call doCommand with the right arguments
@@ -330,7 +330,7 @@ void cdFunc(char * args[], int nargs){
 				/* return 0 when change failed */
 			}
 			/* print out the home PATH */
-		}else if (chdir(args[1]) == 0){
+		}else if (chdir(args[1]) == 0){	
 			printf("Dir change success\n");
 			/* if there has another argument, change to that argument */
 		}else{
