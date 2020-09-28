@@ -70,11 +70,10 @@ int main() {
 			// TODO: Step 3 call doCommand with the right arguments
 			// Remember to check if there is a command (i.e. value of nargs)
 			doCommand(args + i,nargs);
-
 			// print prompt
+    	}
 			printf("%%> ");
 			fflush(stdout);
-    	}
 
 		if (nargs == 0)
 		{
@@ -344,26 +343,49 @@ void lsFunc(char * args[], int nargs){
 	
 	struct dirent **namelist;
 	int numEnts = scandir(".", &namelist, NULL, NULL);
+	int failedCheck = 0;
 
 	if (nargs == 1)
 	{
 		numEnts = scandir(".", &namelist, checkDotDocument, NULL);
 		/* use checkDotDoucment to skip all the dotDocument and then store in the list */
 
-	}else if (*(args+1) == "-a")
+	}else if ((strncmp(args[1],"-",1) == 0))
 	{
-		numEnts = scandir(".", &namelist, NULL, NULL);
-		/* just fprint all the document under the list */
+		if (strcmp(args[1],"-a") == 0){
+			numEnts = scandir(".", &namelist, NULL, NULL);
+			/* just fprint all the document under the list */
+		}else
+		{
+			failedCheck = 1;
+			printf("unknown flag %s, ", args[1]);
+			/* checking for extra flags, if not regonized, return error */
+		}
+	}else if (nargs > 2)
+	{
+		failedCheck = 1;
+		printf("Too many argument, ");
+		/* if input arguments more than 2, return error */
+	}else
+	{
+		failedCheck = 1;
+		printf("unknown argument");
+		/* for the second argument cannot be recognized */
 	}
+	
 
 	int i = 0;
 	char *temp;
 	for (i = 0; i < numEnts; i++)
 	{
+		if (failedCheck){
+			printf("ls function failed\n");
+			break;
+		}
 		temp = namelist[i]->d_name;
 		printf("%s\n", temp);
-		/* print out all the document that stored in the nameList */
 	}
+	/* print out all the document that stored in the nameList */
 }
 
 int checkDotDocument(const struct dirent *passInFile){
