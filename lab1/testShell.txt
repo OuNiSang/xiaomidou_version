@@ -1,0 +1,52 @@
+Script started on Mon 28 Sep 2020 02:07:52 PM EDT
+student@ELEC377-Student:~/elec377-group-50/lab1$ ls
+Makefile  cdCheck  shell  shell.c  testShell.txt
+student@ELEC377-Student:~/elec377-group-50/lab1$ shell
+%> ls
+Makefile
+shell.c
+shell
+cdCheck
+testShell.txt
+%> ls -a
+.
+..
+Makefile
+shell.c
+shell
+cdCheck
+testShell.txt
+%> pwd
+/home/student/elec377-group-50/lab1
+%> cd cdCheck
+Dir change success
+%> pwd
+/home/student/elec377-group-50/lab1/cdCheck
+%> cd
+Home dir change success
+%> pwd
+/home/student
+%> ls -a
+.
+..
+.bash_history
+.Xauthority
+.gitconfig
+.vimrc
+.viminfo
+.fvwm
+	
+	.pub
+ELEC377-Group-102
+.ssh
+linkedListExample
+elec377-group-50
+%> ls -t
+unknown flag -t, ls function failed
+%> ls jsfoh
+unknown argumentls function failed
+%> ls asdf sdaf
+Too many argument, ls function failed
+%> exit
+student@ELEC377-Student:~/elec377-group-50/lab1$ wx  exit
+Script done on Mon 28 Sep 2020 02:09:05 PM EDT
