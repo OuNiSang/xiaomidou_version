@@ -321,8 +321,14 @@ void cdFunc(char * args[], int nargs){
 	{
 		if (nargs == 1)
 		{
-			printf("%s\n", pw->pw_dir);
-			printf("Home dir change success\n");
+			if (chdir(pw->pw_dir) == 0){
+				printf("Home dir change success\n");
+				/* change dir to home directroy*/
+			}else
+			{
+				printf("Home dir change failed\n");
+				/* return 0 when change failed */
+			}
 			/* print out the home PATH */
 		}else if (chdir(args[1]) == 0){
 			printf("Dir change success\n");
