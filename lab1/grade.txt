@@ -1,0 +1,6 @@
+working code		3 /3
+documentation		2 /3 (missing test documentation)
+test			2 /2
+code quality		2 /2
+
+total			9 /10
