@@ -1,6 +1,6 @@
-working code		3 /3
-documentation		2 /3 (missing test documentation)
-test			2 /2
-code quality		2 /2
+working code		1.5 /1.5
+documentation		3.5 /3.5 
+test			2.5 /3.5 (missing test documentation)
+code quality		1.5 /1.5
 
 total			9 /10
