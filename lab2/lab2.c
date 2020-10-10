@@ -31,7 +31,7 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
     int numChars;
     if (fpos == 0){
         numChars = sprintf(page, "Hello");
-        numChars += sprint(page + numChars, "World\n");
+        numChars += sprintf(page + numChars, "World\n");
 	    // write headers
 	    // find first task
         // write first task
@@ -53,7 +53,7 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
 int init_module(){
 
    struct proc_dir_entry * proc_entry;
-   proc_entry = creat_proc_entry("lab2",0444,NULL);//0444 == R, !W/E by everyone;NULL == dir/proc directory
+   proc_entry = create_proc_entry("lab2",0444,NULL);//0444 == R, !W/E by everyone;NULL == dir/proc directory
    if (proc_entry == NULL){
        return -1;
        /* If there was a problem it will return NULL */
