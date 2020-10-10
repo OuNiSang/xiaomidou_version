@@ -9,16 +9,30 @@
 #include <linux/module.h>
 #include <linux/proc_fs.h>
 #include <linux/sched.h>
+#define ENTERING_READ_PROC "<> entering my_read_proc, fpos = %d\n"
 
 static struct task_struct * firstTask, *theTask;
 
 int cnt;
+//+
+//arugs:
+//page:     is a pointer to a kernel buffer for the module to store the data
+//          to be sent to the process
+//blen:     gives the length of this buffer, init is 4k
+//start:    tell the kernel where the other memory is
+//fpos:     tell the module what the current position is in the file, 
+//          init is 0
+//data:     is used to point to data that tracks multiple processes reading the
+//          file at once
+//-
 
 int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, void * data){
 
     int numChars;
     if (fpos == 0){
-	     // write headers
+        numChars = sprintf(page, "Hello");
+        numChars += sprint(page + numChars, "World\n");
+	    // write headers
 	    // find first task
         // write first task
         // advance to next task
@@ -37,8 +51,22 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
 }
 
 int init_module(){
+
    struct proc_dir_entry * proc_entry;
+   proc_entry = creat_proc_entry("lab2",0444,NULL);//0444 == R, !W/E by everyone;NULL == dir/proc directory
+   if (proc_entry == NULL){
+       return -1;
+       /* If there was a problem it will return NULL */
+   }
+
+   proc_entry.read_proc = my_read_proc();
+   return 0;
+   /*then you set the read_proc entry of the proc_entry data 
+     structure to your read proc function, return the value 0 */
 }
 
 void cleanup_module(){
+
+    remove_proc_entry("lab2",NULL);
+
 }
