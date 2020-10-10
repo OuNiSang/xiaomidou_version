@@ -60,7 +60,7 @@ int init_module(){
        /* If there was a problem it will return NULL */
    }
 
-   proc_entry->read_proc;
+   proc_entry->read_proc = my_read_proc;
    return 0;
    /*then you set the read_proc entry of the proc_entry data 
      structure to your read proc function, return the value 0 */
