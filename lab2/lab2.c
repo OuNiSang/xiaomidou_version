@@ -32,7 +32,7 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
     printk(ENTERING_READ_PROC,fpos);
     if (fpos == 0){
         numChars = sprintf(page, "Hello");
-        numChars += sprintf(page + numChars, "World\n");
+        numChars += sprintf(page + numChars, " World\n");
 	    // write headers
 	    // find first task
         // write first task
