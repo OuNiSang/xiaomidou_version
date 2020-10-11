@@ -10,10 +10,6 @@
 #include <linux/proc_fs.h>
 #include <linux/sched.h>
 #define ENTERING_READ_PROC "<> entering my_read_proc, fpos = %d\n"
-#define PID
-#define UID
-#define VSZ
-#define RSS
 
 static struct task_struct * firstTask, *theTask;
 
