@@ -54,9 +54,24 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
         firstTask = theTask;
         numChars += sprintf(page + numChars, "%d\t", theTask->pid);
         numChars += sprintf(page + numChars," %d\t",theTask->uid);
+        //check mm is NULL
+        if (theTask->mm == NULL){
+            numChars += sprintf(page + numChars," %4d\t",00);
+            numChars += sprintf(page + numChars," %4d\t\n",00);
+            /* if mm is NULL, use sprintf to add two 0s to the buffer */
+        }else{
+            numChars += sprintf(page + numChars," %4d\t",
+                                (theTask->mm->total_vm *4000)>>10);
+            numChars += sprintf(page + numChars," %4d\t\n",
+                                (theTask->mm->rss * 4000)>>10);
+            /* add the total_vm and the rss fields of the mm field 
+            multiplied by your variable with the page size to the buffer */
+        }
+        
+        
 
-        numChars += sprintf(page + numChars," %4d\t",theTask->mm->total_vm);
-        numChars += sprintf(page + numChars," %4d\t\n",theTask->mm->rss);
+
+
 
         // advance to next task
     } else {
