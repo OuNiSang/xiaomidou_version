@@ -32,9 +32,9 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
     int numChars;
     if (fpos == 0){
 
-        // //step 1
-        numChars = sprintf(page, "Hello");
-        numChars += sprintf(page + numChars, " World\n");
+        // // //step 1
+        // numChars = sprintf(page, "Hello");
+        // numChars += sprintf(page + numChars, " World\n");
 
 
         // //step2
@@ -48,14 +48,16 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
         theTask = &init_task;
         while (theTask->pid == 0){
             theTask = theTask->next_task;
-            firstTask = theTask;
-            numChars += sprintf(page + numChars, "%d\t", theTask->pid);
-            numChars += sprintf(page + numChars," %d\t\n",theTask->uid);
         }
-        // numChars = sprintf(page + numChars," %d",theTask->vsz);
-        // numChars = sprintf(page + numChars," %d\n",theTask->rss);
 
         // write first task
+        firstTask = theTask;
+        numChars += sprintf(page + numChars, "%d\t", theTask->pid);
+        numChars += sprintf(page + numChars," %d\t",theTask->uid);
+
+        numChars += sprintf(page + numChars," %d\t",theTask->mm->total_vm);
+        numChars += sprintf(page + numChars," %d\t\n",theTask->mm->rss);
+
         // advance to next task
     } else {
         //if (at back at begining of list){
