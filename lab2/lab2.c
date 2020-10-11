@@ -38,6 +38,7 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
 
         // //step2
 	    // // write headers
+        numChars = sprintf(page, "Step2 Test\n");
         numChars += sprintf(page + numChars, "PID\t");
         numChars += sprintf(page + numChars, " UID\t");
         numChars += sprintf(page + numChars, " VSZ\t");
@@ -57,12 +58,14 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
         numChars += sprintf(page + numChars," %d\t",theTask->uid);
         //check mm is NULL
         if (theTask->mm == NULL){
-            numChars += sprintf(page + numChars," %4d\t%4d\t",00,00);
-            /* if mm is NULL, use sprintf to add two 0s to the buffer */
+            numChars += sprintf(page + numChars," %4d\t",00);
+            numChars += sprintf(page + numChars," %4d\t",00;)
+           /* if mm is NULL, use sprintf to add two 0s to the buffer */
         }else{
             numChars += sprintf(page + numChars," %4d\t%4d\t\n",
-                                (theTask->mm->total_vm *4 * Kbyte)>>10,
-                                (theTask->mm->rss * 4 * Kbyte)>>10);
+                                (theTask->mm->total_vm *4 * Kbyte)>>10);
+            numChars += sprintf(page + numChars," %4d\t%4d\t\n",
+                                (theTask->mm->rss *4 * Kbyte)>>10);
             /* add the total_vm and the rss fields of the mm field
             multiplied by your variable with the page size to the buffer */
         }
@@ -77,23 +80,29 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
     
     } else {
 
+        //check whether riched to the end of the list
         if (theTask == firstTask){
             *eof = 0;
             *start = page;
             return 0;
         }
 
-	    // write task info for one task
         numChars += sprintf(page + numChars, "%d\t", theTask->pid);
         numChars += sprintf(page + numChars," %d\t",theTask->uid);
         //check mm is NULL
         if (theTask->mm == NULL){
-            numChars += sprintf(page + numChars," %4d\t%4d\t",00,00);
+            numChars += sprintf(page + numChars," %4d\t",00);
+            numChars += sprintf(page + numChars," %4d\t",00);
+
             /* if mm is NULL, use sprintf to add two 0s to the buffer */
         }else{
             numChars += sprintf(page + numChars," %4d\t%4d\t\n",
-                                (theTask->mm->total_vm *4 * Kbyte)>>10,
-                                (theTask->mm->rss * 4 * Kbyte)>>10);
+                                (theTask->mm->total_vm *4 * Kbyte)>>10);
+            numChars += sprintf(page + numChars," %4d\t%4d\t\n",
+                                (theTask->mm->rss *4 * Kbyte)>>10);
+            /* add the total_vm and the rss fields of the mm field
+            multiplied by your variable with the page size to the buffer */
+        }
         }
 
 	    // advance to next task
