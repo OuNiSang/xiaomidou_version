@@ -39,10 +39,10 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
 
         // //step2
 	    // // write headers
-        // numChars = sprintf(page + numChars, "PID");
-        // numChars += sprintf(page + numChars, " UID");
-        // numChars += sprintf(page + numChars, " VSZ");
-        // numChars += sprintf(page + numChars, " RSS\n");
+        numChars = sprintf(page + numChars, "PID");
+        numChars += sprintf(page + numChars, " UID");
+        numChars += sprintf(page + numChars, " VSZ");
+        numChars += sprintf(page + numChars, " RSS\n");
 
 	    // // find first task
         // theTask = &init_task;
