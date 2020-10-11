@@ -79,7 +79,7 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
             return 0;
         }
 
-        numChars += sprintf(page + numChars, "%d\t", theTask->pid);
+        numChars = sprintf(page, "%d\t", theTask->pid);
         numChars += sprintf(page + numChars," %d\t",theTask->uid);
         //check mm is NULL
         if (theTask->mm == NULL){
