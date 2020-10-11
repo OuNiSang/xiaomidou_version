@@ -103,7 +103,6 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
             /* add the total_vm and the rss fields of the mm field
             multiplied by your variable with the page size to the buffer */
         }
-        }
 
 	    // advance to next task
         do
