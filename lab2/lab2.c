@@ -37,13 +37,13 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
     if (fpos == 0){
 
         // //step 1
-        // numChars = sprintf(page, "Hello");
-        // numChars += sprintf(page + numChars, " World\n");
+        numChars = sprintf(page, "Hello");
+        numChars += sprintf(page + numChars, " World\n");
 
 
         //step2
 	    // write headers
-        numChars = sprintf(page, "PID");
+        numChars = sprintf(page + numChars, "PID");
         numChars += sprintf(page + numChars, " UID");
         numChars += sprintf(page + numChars, " VSZ");
         numChars += sprintf(page + numChars, " RSS\n");
@@ -52,10 +52,10 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
         theTask = &init_task;
         while (theTask->pid == 0){
             theTask = theTask->next_task;
+            firstTask = theTask;
+            numChars = sprintf(page + numChars, "%d", theTask->pid);
+            numChars = sprintf(page + numChars," %d\n",theTask->uid);
         }
-        firstTask = theTask;
-        numChars = sprintf(page + numChars, "%d", theTask->pid);
-        numChars = sprintf(page + numChars," %d\n",theTask->uid);
         // numChars = sprintf(page + numChars," %d",theTask->vsz);
         // numChars = sprintf(page + numChars," %d\n",theTask->rss);
 
