@@ -10,10 +10,15 @@
 #include <linux/proc_fs.h>
 #include <linux/sched.h>
 #define ENTERING_READ_PROC "<> entering my_read_proc, fpos = %d\n"
+#define PID
+#define UID
+#define VSZ
+#define RSS
 
 static struct task_struct * firstTask, *theTask;
 
 int cnt;
+
 //+
 //arugs:
 //page:     is a pointer to a kernel buffer for the module to store the data
@@ -29,12 +34,34 @@ int cnt;
 int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, void * data){
 
     int numChars;
-    printk(ENTERING_READ_PROC,fpos);
+    struct task_struct * init_task;
+    init_task->pid = 0;
+
     if (fpos == 0){
-        numChars = sprintf(page, "Hello");
-        numChars += sprintf(page + numChars, " World\n");
+
+        // //step 1
+        // numChars = sprintf(page, "Hello");
+        // numChars += sprintf(page + numChars, " World\n");
+
+
+        //step2
 	    // write headers
+        numChars = sprintf(page, "PID");
+        numChars += sprintf(page + numChars, " UID");
+        numChars += sprintf(page + numChars, " VSZ");
+        numChars += sprintf(page + numChars, " RSS\n");
+
 	    // find first task
+        theTask = &init_task;
+        while (theTask->pid == 0){
+            theTask = theTask->next_task;
+        }
+        firstTask = theTask;
+        numChars = sprintf(page + numChars, "%d", theTask->pid);
+        numChars = sprintf(page + numChars," %d",theTask->uid);
+        numChars = sprintf(page + numChars," %d",theTask->vsz);
+        numChars = sprintf(page + numChars," %d\n",theTask->rss);
+
         // write first task
         // advance to next task
     } else {
