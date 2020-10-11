@@ -59,7 +59,7 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
         //check mm is NULL
         if (theTask->mm == NULL){
             numChars += sprintf(page + numChars," %4d\t",00);
-            numChars += sprintf(page + numChars," %4d\t",00;)
+            numChars += sprintf(page + numChars," %4d\t",00);
            /* if mm is NULL, use sprintf to add two 0s to the buffer */
         }else{
             numChars += sprintf(page + numChars," %4d\t%4d\t\n",
