@@ -34,8 +34,6 @@ int cnt;
 int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, void * data){
 
     int numChars;
-    struct task_struct * init_task;
-
     if (fpos == 0){
 
         // //step 1
