@@ -77,7 +77,7 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
             /* move the variable theTask to point to the next valid task */
         } while (theTask->pid == 0);
         /* theTask pointed back to the firstTask to inidicate it complete the list */
-    
+        fpos = 1;
     } else {
 
         //check whether riched to the end of the list
