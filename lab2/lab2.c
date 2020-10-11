@@ -10,6 +10,7 @@
 #include <linux/proc_fs.h>
 #include <linux/sched.h>
 #define ENTERING_READ_PROC "<> entering my_read_proc, fpos = %d\n"
+#define Kbyte 1024
 
 static struct task_struct * firstTask, *theTask;
 
@@ -61,9 +62,9 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
             /* if mm is NULL, use sprintf to add two 0s to the buffer */
         }else{
             numChars += sprintf(page + numChars," %4d\t",
-                                (theTask->mm->total_vm *4000)>>10);
+                                (theTask->mm->total_vm *4 * Kbyte)>>10);
             numChars += sprintf(page + numChars," %4d\t\n",
-                                (theTask->mm->rss * 4000)>>10);
+                                (theTask->mm->rss * 4 * Kbyte)>>10);
             /* add the total_vm and the rss fields of the mm field 
             multiplied by your variable with the page size to the buffer */
         }
