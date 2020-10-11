@@ -45,7 +45,8 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
 
 	    // find first task
         theTask = &init_task;
-        while (theTask->pid == 0){
+        while (theTask->pid == 0)
+        {
             theTask = theTask->next_task;
         }
 
@@ -56,10 +57,12 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
         numChars += sprintf(page + numChars, "%d\t", theTask->pid);
         numChars += sprintf(page + numChars," %d\t",theTask->uid);
         //check mm is NULL
-        if (theTask->mm == NULL){
+        if (theTask->mm == NULL)
+        {
             numChars += sprintf(page + numChars," %4d\t%4d\t",00,00);
             /* if mm is NULL, use sprintf to add two 0s to the buffer */
-        }else{
+        }else
+        {
             numChars += sprintf(page + numChars," %4d\t%4d\t\n",
                                 (theTask->mm->total_vm *4 * Kbyte)>>10,
                                 (theTask->mm->rss * 4 * Kbyte)>>10);
@@ -68,7 +71,8 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
         }
 
         // advance to next task
-        do{
+        do
+        {
             theTask = theTask->next_task;
             /* move the variable theTask to point to the next valid task */
         } while (theTask->pid == 0);
@@ -76,7 +80,8 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
     
     } else {
 
-        if (theTask == firstTask){
+        if (theTask == firstTask)
+        {
             *eof = 0;
             *start = page;
             return 0;
@@ -86,16 +91,20 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
         numChars += sprintf(page + numChars, "%d\t", theTask->pid);
         numChars += sprintf(page + numChars," %d\t",theTask->uid);
         //check mm is NULL
-        if (theTask->mm == NULL){
+        if (theTask->mm == NULL)
+        {
             numChars += sprintf(page + numChars," %4d\t%4d\t",00,00);
             /* if mm is NULL, use sprintf to add two 0s to the buffer */
-        }else{
+        }else
+        {
             numChars += sprintf(page + numChars," %4d\t%4d\t\n",
                                 (theTask->mm->total_vm *4 * Kbyte)>>10,
                                 (theTask->mm->rss * 4 * Kbyte)>>10);
+        }
 
 	    // advance to next task
-        do{
+        do
+        {
             theTask = theTask->next_task;
             /* move the variable theTask to point to the next valid task */
         } while (theTask->pid == 0);
