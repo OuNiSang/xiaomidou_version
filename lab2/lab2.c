@@ -33,6 +33,8 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
     int numChars;
     if (fpos == 0){
 
+    do
+    {
         // // //step 1
         // numChars = sprintf(page, "Hello");
         // numChars += sprintf(page + numChars, " World\n");
@@ -69,18 +71,11 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
             multiplied by your variable with the page size to the buffer */
         }
 
-        do
-        {
-            theTask = theTask->next_task;
-            /* move the variable theTask to point to the next valid task */
-        } while (theTask->pid != 0);
-        
-        
-
-
-
-
         // advance to next task
+        theTask = theTask->next_task;
+        /* move the variable theTask to point to the next valid task */
+    } while (theTask->pid != 0);
+        
     } else {
         //if (at back at begining of list){
             *eof = 0;
