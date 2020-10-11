@@ -35,7 +35,6 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
 
     int numChars;
     struct task_struct * init_task;
-    init_task->pid = 0;
 
     if (fpos == 0){
 
@@ -58,9 +57,9 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
         }
         firstTask = theTask;
         numChars = sprintf(page + numChars, "%d", theTask->pid);
-        numChars = sprintf(page + numChars," %d",theTask->uid);
-        numChars = sprintf(page + numChars," %d",theTask->vsz);
-        numChars = sprintf(page + numChars," %d\n",theTask->rss);
+        numChars = sprintf(page + numChars," %d\n",theTask->uid);
+        // numChars = sprintf(page + numChars," %d",theTask->vsz);
+        // numChars = sprintf(page + numChars," %d\n",theTask->rss);
 
         // write first task
         // advance to next task
