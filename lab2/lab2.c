@@ -68,6 +68,12 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
             /* add the total_vm and the rss fields of the mm field 
             multiplied by your variable with the page size to the buffer */
         }
+
+        do
+        {
+            theTask = theTask->next_task;
+            /* move the variable theTask to point to the next valid task */
+        } while (theTask->pid != 0);
         
         
 
