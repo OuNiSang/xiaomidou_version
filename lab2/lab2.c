@@ -22,12 +22,11 @@ int cnt;
 //          to be sent to the process
 //blen:     gives the length of this buffer, init is 4k
 //start:    tell the kernel where the other memory is
-//fpos:     tell the module what the current position is in the file, 
+//fpos:     tell the module what the current position is in the file,
 //          init is 0
 //data:     is used to point to data that tracks multiple processes reading the
 //          file at once
 //-
-
 int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, void * data){
 
     int numChars;
@@ -40,10 +39,7 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
         // //step2
 	    // // write headers
         numChars = sprintf(page, "Step2 Test\n");
-        numChars += sprintf(page + numChars, "PID\t");
-        numChars += sprintf(page + numChars, " UID\t");
-        numChars += sprintf(page + numChars, " VSZ\t");
-        numChars += sprintf(page + numChars, " RSS\n");
+        numChars += sprintf(page + numChars,"PID\tUID\tVSZ\tRSS\n")
 	    // find first task
         theTask = &init_task;
         while (theTask->pid == 0){
@@ -52,16 +48,13 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
         // write first task
         firstTask = theTask;
         //start iterate all the list
-        numChars += sprintf(page + numChars, "%d\t", theTask->pid);
-        numChars += sprintf(page + numChars," %d\t",theTask->uid);
+        numChars += sprintf(page + numChars, "%d\t%d\t", theTask->pid, theTask->uid);
         //check mm is NULL
         if (theTask->mm == NULL){
-            numChars += sprintf(page + numChars," %4d\t",00);
-            numChars += sprintf(page + numChars," %4d\t\n",00);
+            numChars += sprintf(page + numChars, "%d\t%d\t",00,00);
         }else{
-            numChars += sprintf(page + numChars," %4d\t",
-                                (theTask->mm->total_vm *4 * Kbyte)>>10);
-            numChars += sprintf(page + numChars," %4d\t\n",
+            numChars += sprintf(page + numChars," %4d\t%4d\t\n",
+                                (theTask->mm->total_vm *4 * Kbyte)>>10,
                                 (theTask->mm->rss *4 * Kbyte)>>10);
         }
 
@@ -78,20 +71,15 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
             *start = page;
             return 0;
         }
-
-        numChars = sprintf(page, "%d\t", theTask->pid);
-        numChars += sprintf(page + numChars," %d\t",theTask->uid);
+        numChars = sprintf(page, "%d\t%d\t", theTask->pid, theTask->uid);
         //check mm is NULL
         if (theTask->mm == NULL){
-            numChars += sprintf(page + numChars," %4d\t",00);
-            numChars += sprintf(page + numChars," %4d\t\n",00);
+            numChars += sprintf(page + numChars, "%d\t%d\t",00,00);
         }else{
-            numChars += sprintf(page + numChars," %4d\t",
-                                (theTask->mm->total_vm *4 * Kbyte)>>10);
-            numChars += sprintf(page + numChars," %4d\t\n",
+            numChars += sprintf(page + numChars," %4d\t%4d\t\n",
+                                (theTask->mm->total_vm *4 * Kbyte)>>10,
                                 (theTask->mm->rss *4 * Kbyte)>>10);
         }
-
 	    // advance to next task
         do
         {
@@ -115,7 +103,7 @@ int init_module(){
 
    proc_entry->read_proc = my_read_proc;
    return 0;
-   /*then you set the read_proc entry of the proc_entry data 
+   /*then you set the read_proc entry of the proc_entry data
      structure to your read proc function, return the value 0 */
 }
 
