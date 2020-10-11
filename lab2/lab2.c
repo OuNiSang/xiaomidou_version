@@ -51,7 +51,7 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
         numChars += sprintf(page + numChars, "%d\t%d\t", theTask->pid, theTask->uid);
         //check mm is NULL
         if (theTask->mm == NULL){
-            numChars += sprintf(page + numChars, "%d\t%d\t",00,00);
+            numChars += sprintf(page + numChars, "%d\t%d\t\n",00,00);
         }else{
             numChars += sprintf(page + numChars," %4d\t%4d\t\n",
                                 (theTask->mm->total_vm *4 * Kbyte)>>10,
@@ -74,7 +74,7 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
         numChars = sprintf(page, "%d\t%d\t", theTask->pid, theTask->uid);
         //check mm is NULL
         if (theTask->mm == NULL){
-            numChars += sprintf(page + numChars, "%d\t%d\t",00,00);
+            numChars += sprintf(page + numChars, "%d\t%d\t\n",00,00);
         }else{
             numChars += sprintf(page + numChars," %4d\t%4d\t\n",
                                 (theTask->mm->total_vm *4 * Kbyte)>>10,
