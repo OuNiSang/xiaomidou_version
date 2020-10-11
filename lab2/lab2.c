@@ -55,8 +55,8 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
         numChars += sprintf(page + numChars, "%d\t", theTask->pid);
         numChars += sprintf(page + numChars," %d\t",theTask->uid);
 
-        numChars += sprintf(page + numChars," %d\t",theTask->mm->total_vm);
-        numChars += sprintf(page + numChars," %d\t\n",theTask->mm->rss);
+        numChars += sprintf(page + numChars," %4d\t",theTask->mm->total_vm);
+        numChars += sprintf(page + numChars," %4d\t\n",theTask->mm->rss);
 
         // advance to next task
     } else {
