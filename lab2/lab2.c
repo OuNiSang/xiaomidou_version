@@ -62,20 +62,19 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
         }else{
             numChars += sprintf(page + numChars," %4d\t%4d\t\n",
                                 (theTask->mm->total_vm *4 * Kbyte)>>10,
-                                (theTask->mm->rss * 4 * Kbyte)>>10));
+                                (theTask->mm->rss * 4 * Kbyte)>>10);
             /* add the total_vm and the rss fields of the mm field
             multiplied by your variable with the page size to the buffer */
+        }
 
         // advance to next task
         do{
             theTask = theTask->next_task;
             /* move the variable theTask to point to the next valid task */
         } while (theTask->pid == 0);
-
-        theTask = firstTask;
         /* theTask pointed back to the firstTask to inidicate it complete the list */
-    } 
-    else {
+    
+    } else {
 
         if (theTask == firstTask){
             *eof = 0;
@@ -93,7 +92,7 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
         }else{
             numChars += sprintf(page + numChars," %4d\t%4d\t\n",
                                 (theTask->mm->total_vm *4 * Kbyte)>>10,
-                                (theTask->mm->rss * 4 * Kbyte)>>10));
+                                (theTask->mm->rss * 4 * Kbyte)>>10);
 
 	    // advance to next task
         do{
