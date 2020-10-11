@@ -4,7 +4,7 @@
  * Purpose: Skeleton solution to ELEC 377 Lab2.
  *
 -*/
-
+ 
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/proc_fs.h>
