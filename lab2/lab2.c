@@ -31,6 +31,7 @@ int cnt;
 int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, void * data){
 
     int numChars;
+    printk(ENTERING_READ_PROC,fops);
     if (fpos == 0){
         // // //step 1
         // numChars = sprintf(page, "Hello");
