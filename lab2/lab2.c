@@ -65,14 +65,14 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
         } while (theTask->pid == 0);
     } else {
 
-        //check whether riched to the end of the list
+        //check whether reached to the end of the list
         if (theTask == firstTask){
             *eof = 0;
             *start = page;
             return 0;
         }
 
-        //print all the data for the cuurent task
+        //print all the data for the current task
         numChars = sprintf(page, "%4d\t%4d\t", theTask->pid, theTask->uid);
         //check mm is NULL
         if (theTask->mm == NULL){
