@@ -72,7 +72,7 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
             return 0;
         }
 
-        //print all the data for the cuurent task
+        //print all the data for the current task
         numChars = sprintf(page, "%4d\t%4d\t", theTask->pid, theTask->uid);
         //check mm is NULL
         if (theTask->mm == NULL){
