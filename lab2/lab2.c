@@ -65,7 +65,7 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
         } while (theTask->pid == 0);
     } else {
 
-        //check whether riched to the end of the list
+        //check whether reached to the end of the list
         if (theTask == firstTask){
             *eof = 0;
             *start = page;
