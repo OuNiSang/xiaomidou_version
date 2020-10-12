@@ -27,7 +27,7 @@ root       624   460  0 11:07 tty2     00:00:00 script lab2out.txt
 root       625   624  0 11:07 tty2     00:00:00 script lab2out.txt
 root       626   625  0 11:07 pts/0    00:00:00 bash -i
 root       627   626  0 11:07 pts/0    00:00:00 ps -ef
-root@ELEC377-Student:/home/student/elec377-group-50/lab2# ps -eo pid,uid,vsz,rss >pi sout.txt
+root@ELEC377-Student:/home/student/elec377-group-50/lab2# ps -eo pid,uid,vsz,rss >psout.txt
 root@ELEC377-Student:/home/student/elec377-group-50/lab2# cat psout.txt
   PID   UID   VSZ  RSS
     1     0   480  240
@@ -62,7 +62,7 @@ Warning: loading lab2.o will taint the kernel: no license
 Module lab2 loaded, with warnings
 root@ELEC377-Student:/home/student/elec377-group-50/lab2# cat /proc/lab2
 Step2 Test
-PID	UID	VSZ	RSS
+PID	  UID	  VSZ	  RSS
 1	0	  480	 240	
 2	0	0	0	
 3	0	0	0	

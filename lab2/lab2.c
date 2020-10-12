@@ -4,7 +4,6 @@
  * Purpose: Skeleton solution to ELEC 377 Lab2.
  *
 -*/
- 
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/proc_fs.h>
@@ -48,10 +47,10 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
         // write first task
         firstTask = theTask;
         //start iterate all the list
-        numChars += sprintf(page + numChars, "%d\t%d\t", theTask->pid, theTask->uid);
+        numChars += sprintf(page + numChars, "%4d\t%4d\t", theTask->pid, theTask->uid);
         //check mm is NULL
         if (theTask->mm == NULL){
-            numChars += sprintf(page + numChars, "%d\t%d\t\n",00,00);
+            numChars += sprintf(page + numChars, "%4d\t%4d\t\n",00,00);
         }else{
             numChars += sprintf(page + numChars," %4d\t%4d\t\n",
                                 (theTask->mm->total_vm *4 * Kbyte)>>10,
@@ -71,10 +70,10 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
             *start = page;
             return 0;
         }
-        numChars = sprintf(page, "%d\t%d\t", theTask->pid, theTask->uid);
+        numChars = sprintf(page, "%4d\t%4d\t", theTask->pid, theTask->uid);
         //check mm is NULL
         if (theTask->mm == NULL){
-            numChars += sprintf(page + numChars, "%d\t%d\t\n",00,00);
+            numChars += sprintf(page + numChars, "%4d\t%4d\t\n",00,00);
         }else{
             numChars += sprintf(page + numChars," %4d\t%4d\t\n",
                                 (theTask->mm->total_vm *4 * Kbyte)>>10,
