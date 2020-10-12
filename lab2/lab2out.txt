@@ -1,6 +1,6 @@
-Script started on Mon 12 Oct 2020 10:49:58 AM EDT
-root@ELEC377-Student:/home/student/elec377-group-50/lab2# exitps -eo pid,uid,vsz,rss -sort pid >psout.txtexit[K[Kexitps -eo pid,uid,vsz,rss -sort pid >psout.txtrmmod lab2[Kcat /proc/lab2 [P[Pinsmod lab2.ocat /proc/lab2 [P[P[P[P[Prmmod lab2ps -eo pid,uid,vsz,rss -sort pid >psout.txt                    > psout.txt
-root@ELEC377-Student:/home/student/elec377-group-50/lab2# cat psout.txt 
+Script started on Mon 12 Oct 2020 10:55:35 AM EDT
+root@ELEC377-Student:/home/student/elec377-group-50/lab2# ps -eo pid,uid,vsz,rss >psout.txt
+root@ELEC377-Student:/home/student/elec377-group-50/lab2# cat psout.txt
   PID   UID   VSZ  RSS
     1     0   480  240
     2     0     0    0
@@ -18,21 +18,21 @@ root@ELEC377-Student:/home/student/elec377-group-50/lab2# cat psout.txt
   449     0  1456  560
   452     0  4900 2108
   455    25  4788 1940
-  459  1000  2652 1528
+  459  1000  2660 1556
   460     0  2656 1552
   461     0  1336  468
   462     0  1336  468
   463     0  1336  468
   464     0  1336  468
-  540     0  1564  552
-  541     0  1572  592
-  542     0  2596 1448
-  543     0  2144  636
-root@ELEC377-Student:/home/student/elec377-group-50/lab2# insmod lab2.o
+  568     0  1564  552
+  569     0  1572  592
+  570     0  2596 1440
+  571     0  2144  636
+root@ELEC377-Student:/home/student/elec377-group-50/lab2# insmod lab2.o
 Warning: loading lab2.o will taint the kernel: no license
   See http://www.tux.org/lkml/#export-tainted for information about tainted modules
 Module lab2 loaded, with warnings
-root@ELEC377-Student:/home/student/elec377-group-50/lab2# cat /proc/lab2 
+root@ELEC377-Student:/home/student/elec377-group-50/lab2# cat /proc/lab2
 Step2 Test
 PID	UID	VSZ	RSS
 1	0	  480	 240	
@@ -51,16 +51,16 @@ PID	UID	VSZ	RSS
 449	0	 1456	 560	
 452	0	 4900	2108	
 455	25	 4788	1940	
-459	1000	 2652	1528	
+459	1000	 2660	1556	
 460	0	 2656	1552	
 461	0	 1336	 468	
 462	0	 1336	 468	
 463	0	 1336	 468	
 464	0	 1336	 468	
-540	0	 1564	 552	
-541	0	 1572	 592	
-542	0	 2608	1488	
-546	0	 1552	 468	
-root@ELEC377-Student:/home/student/elec377-group-50/lab2# rmmod lab2
+568	0	 1564	 552	
+569	0	 1572	 592	
+570	0	 2596	1440	
+574	0	 1552	 468	
+root@ELEC377-Student:/home/student/elec377-group-50/lab2# re mmod lab2
 root@ELEC377-Student:/home/student/elec377-group-50/lab2# exit
-Script done on Mon 12 Oct 2020 10:51:44 AM EDT
+Script done on Mon 12 Oct 2020 10:56:50 AM EDT
