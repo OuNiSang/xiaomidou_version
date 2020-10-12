@@ -46,7 +46,8 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
         }
         // write first task
         firstTask = theTask;
-        //start iterate all the list
+
+        //print all the data for the cuurent task
         numChars += sprintf(page + numChars, "%4d\t%4d\t", theTask->pid, theTask->uid);
         //check mm is NULL
         if (theTask->mm == NULL){
@@ -70,6 +71,8 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
             *start = page;
             return 0;
         }
+
+        //print all the data for the cuurent task
         numChars = sprintf(page, "%4d\t%4d\t", theTask->pid, theTask->uid);
         //check mm is NULL
         if (theTask->mm == NULL){
@@ -79,6 +82,7 @@ int my_read_proc(char * page, char **start, off_t fpos, int blen, int * eof, voi
                                 (theTask->mm->total_vm *4 * Kbyte)>>10,
                                 (theTask->mm->rss *4 * Kbyte)>>10);
         }
+
 	    // advance to next task
         do
         {
