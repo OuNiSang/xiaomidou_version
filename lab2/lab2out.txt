@@ -1,38 +1,38 @@
-Script started on Mon 12 Oct 2020 10:55:35 AM EDT
-root@ELEC377-Student:/home/student/elec377-group-50/lab2# ps -eo pid,uid,vsz,rss >psout.txt
-root@ELEC377-Student:/home/student/elec377-group-50/lab2# cat psout.txt
-  PID   UID   VSZ  RSS
-    1     0   480  240
-    2     0     0    0
-    3     0     0    0
-    4     0     0    0
-    5     0     0    0
-    6     0     0    0
-   10     0     0    0
-   11     0     0    0
-   59     0  1404  592
-   62     0  1344  448
-  192     0  1372  512
-  419     0     0    0
-  442     0  1376  520
-  449     0  1456  560
-  452     0  4900 2108
-  455    25  4788 1940
-  459  1000  2660 1556
-  460     0  2656 1552
-  461     0  1336  468
-  462     0  1336  468
-  463     0  1336  468
-  464     0  1336  468
-  568     0  1564  552
-  569     0  1572  592
-  570     0  2596 1440
-  571     0  2144  636
+Script started on Mon 12 Oct 2020 11:02:24 AM EDT
+root@ELEC377-Student:/home/student/elec377-group-50/lab2# ps -ef
+UID        PID  PPID  C STIME TTY          TIME CMD
+root         1     0  0 10:37 ?        00:00:03 init [3]  
+root         2     1  0 10:37 ?        00:00:00 [keventd]
+root         3     1  0 10:37 ?        00:00:00 [ksoftirqd_CPU0]
+root         4     1  0 10:37 ?        00:00:00 [kswapd]
+root         5     1  0 10:37 ?        00:00:00 [bdflush]
+root         6     1  0 10:37 ?        00:00:00 [kupdated]
+root        10     1  0 10:37 ?        00:00:00 [mdrecoveryd]
+root        11     1  0 10:37 ?        00:00:00 [kjournald]
+root        59     1  0 10:37 ?        00:00:00 /usr/sbin/syslogd
+root        62     1  0 10:37 ?        00:00:00 /usr/sbin/klogd -c 3 -x
+root       192     1  0 10:37 ?        00:00:00 /sbin/dhcpcd -d -t 10 eth0
+root       419     1  0 10:37 ?        00:00:00 [khubd]
+root       442     1  0 10:37 ?        00:00:00 /usr/sbin/inetd
+root       449     1  0 10:37 ?        00:00:00 /usr/sbin/crond -l10
+root       452     1  0 10:37 ?        00:00:00 sendmail: accepting connections       
+smmsp      455     1  0 10:37 ?        00:00:00 sendmail: Queue runner@00:25:00 for /var/spool/clientmqueue
+student    459     1  0 10:37 tty1     00:00:00 -bash
+root       460     1  0 10:37 tty2     00:00:00 -bash
+root       461     1  0 10:37 tty3     00:00:00 /sbin/agetty 38400 tty3 linux
+root       462     1  0 10:37 tty4     00:00:00 /sbin/agetty 38400 tty4 linux
+root       463     1  0 10:37 tty5     00:00:00 /sbin/agetty 38400 tty5 linux
+root       464     1  0 10:37 tty6     00:00:00 /sbin/agetty 38400 tty6 linux
+root       609   460  0 11:02 tty2     00:00:00 script lab2out.txt
+root       610   609  0 11:02 tty2     00:00:00 script lab2out.txt
+root       611   610  0 11:02 pts/0    00:00:00 bash -i
+root       612   611  0 11:02 pts/0    00:00:00 ps -ef
+root@ELEC377-Student:/home/student/elec377-group-50/lab2# ps -eo pid,uid,vsz,rss > psout.txt
 root@ELEC377-Student:/home/student/elec377-group-50/lab2# insmod lab2.o
 Warning: loading lab2.o will taint the kernel: no license
   See http://www.tux.org/lkml/#export-tainted for information about tainted modules
 Module lab2 loaded, with warnings
-root@ELEC377-Student:/home/student/elec377-group-50/lab2# cat /proc/lab2
+root@ELEC377-Student:/home/student/elec377-group-50/lab2# cat proc    /proc/lab2
 Step2 Test
 PID	UID	VSZ	RSS
 1	0	  480	 240	
@@ -50,17 +50,17 @@ PID	UID	VSZ	RSS
 442	0	 1376	 520	
 449	0	 1456	 560	
 452	0	 4900	2108	
-455	25	 4788	1940	
-459	1000	 2660	1556	
+455	25	 4788	1944	
+459	1000	 2660	1564	
 460	0	 2656	1552	
 461	0	 1336	 468	
 462	0	 1336	 468	
 463	0	 1336	 468	
 464	0	 1336	 468	
-568	0	 1564	 552	
-569	0	 1572	 592	
-570	0	 2596	1440	
-574	0	 1552	 468	
-root@ELEC377-Student:/home/student/elec377-group-50/lab2# re mmod lab2
+609	0	 1564	 552	
+610	0	 1572	 592	
+611	0	 2596	1440	
+615	0	 1552	 468	
+root@ELEC377-Student:/home/student/elec377-group-50/lab2# rmmod lab2
 root@ELEC377-Student:/home/student/elec377-group-50/lab2# exit
-Script done on Mon 12 Oct 2020 10:56:50 AM EDT
+Script done on Mon 12 Oct 2020 11:03:25 AM EDT
