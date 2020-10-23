@@ -10,7 +10,6 @@
 #define MEMSIZE 200
 #define BUFFSIZE 5
 
-static struct shard *shardptr;
 struct shared {
     int lock;   
     char buffer[BUFFSIZE];
