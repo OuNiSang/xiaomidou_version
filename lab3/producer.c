@@ -48,6 +48,7 @@ int main (int argc, char *argv[]){
 	sharedPtr->numProducers++;
 	releaseMutex(&sharedPtr->lock);
 	printf("P_initTest_1");
+	
 	while ((c = getchar()) != EOF){
 		stored = FALSE;
 		printf("P_whileTest_1");
