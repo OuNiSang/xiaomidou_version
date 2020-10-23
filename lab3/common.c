@@ -35,17 +35,11 @@ void getMutex(int *  lock){
 		sharedptr.lock = test_and_set(lock);
 		/* code */
 	}
-	// sharedptr.lock = FALSE;
+	sharedptr.lock = FALSE;
 }
 
 void releaseMutex(int * lock){
 	// set the mutex back to initial state so that somebody else can claim it
-	while (sharedptr.lock == TRUE)
-	{
-		printf("wait for process exit");
-		/* code */
-	}
-	
 	sharedptr.lock = FALSE;
 }
 
