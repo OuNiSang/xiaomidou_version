@@ -33,10 +33,10 @@ void getMutex(int *  lock){
 	while (sharedptr.lock)
 	{
 		printf("getmutex on test, lock is %d",sharedptr.lock);
-		sharedptr.lock = test_and_set(lock);
+		sharedptr.lock = test_and_set(sharedptr.lock);
 		/* code */
 	}
-	sharedptr.lock = FALSE;
+	// sharedptr.lock = FALSE;
 }
 
 void releaseMutex(int * lock){
