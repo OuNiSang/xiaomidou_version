@@ -30,7 +30,7 @@ void getMutex(int *  lock){
 	// this should not return until it has mutual exclusion. Note that many versions of 
 	// this will probobly be running at the same time.
 	sharedptr.lock = FALSE;
-	while (test_and_set(&lock))
+	while (test_and_set(sharedptr.lock))
 	{
 		printf("getmutex on test\n");
 	}
