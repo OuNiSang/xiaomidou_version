@@ -42,10 +42,11 @@ int main (int argc, char *argv[]){
 	}
 	
     // put your code here...
+	printf("C_initTest_in");
 	getMutex(&sharedPtr->lock);
 	int numProd = sharedPtr->numProducers;
 	releaseMutex(&sharedPtr->lock);
-	printf("C_initTest_1");
+	printf("C_initTest_out");
 	int charRead = TRUE;
 	char c;
 	while (numProd != 0 && charRead)
