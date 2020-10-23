@@ -51,9 +51,11 @@ int main (int argc, char *argv[]){
 	while (numProd != 0 && charRead)
 	{
 		charRead = FALSE;
+		printf("C_whileTest_1");
 		while (charRead == FALSE && numProd != 0)
 		{
 			getMutex(&sharedPtr->lock);
+			printf("C_whileTest_2");
 			if (sharedPtr->count != 0)
 			{
 				c = sharedPtr->buffer[sharedPtr->out];
@@ -73,7 +75,7 @@ int main (int argc, char *argv[]){
 		
 		/* code */
 	}
-	
+	printf("C_whileTest_3");
     
 	return 0;
 }
