@@ -19,7 +19,7 @@
 #define FALSE 0
 #define TRUE 1
 
-static struct shared sharedptr;
+static struct shared *sharedptr;
 
 int test_and_set(int * lock){
     return __cmpxchg(lock,0,1,4);
@@ -29,17 +29,19 @@ int test_and_set(int * lock){
 void getMutex(int *  lock){
 	// this should not return until it has mutual exclusion. Note that many versions of 
 	// this will probobly be running at the same time.
-	sharedptr.lock = TRUE;
-	while (sharedptr.lock == TRUE)
+	&sharedptr.lock = TRUE;
+	while (&sharedptr.lock)
 	{
-		sharedptr.lock = test_and_set(lock);
+		printf("getmutex on test\n");
+		&sharedptr.lock = test_and_set(lock);
 		/* code */
 	}
-	sharedptr.lock = FALSE;
+	&sharedptr.lock = FALSE;
 }
 
 void releaseMutex(int * lock){
 	// set the mutex back to initial state so that somebody else can claim it
-	sharedptr.lock = FALSE;
+	printf("release mutex on test\n");
+	&sharedptr.lock = FALSE;
 }
 
