@@ -32,7 +32,7 @@ void getMutex(int *  lock){
 	sharedptr.lock = TRUE;
 	while (sharedptr.lock)
 	{
-		printf("getmutex on test, lock is %d",lock);
+		printf("getmutex on test, lock is %d",&lock);
 		sharedptr.lock = test_and_set(lock);
 		/* code */
 	}
@@ -41,7 +41,7 @@ void getMutex(int *  lock){
 
 void releaseMutex(int * lock){
 	// set the mutex back to initial state so that somebody else can claim it
-		printf("release mutex on test, lock is %d",lock);	
+		printf("release mutex on test, lock is %d",&lock);	
 		sharedptr.lock = FALSE;
 }
 
