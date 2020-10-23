@@ -29,17 +29,19 @@ int test_and_set(int * lock){
 void getMutex(int *  lock){
 	// this should not return until it has mutual exclusion. Note that many versions of 
 	// this will probobly be running at the same time.
-	sharedptr.lock = FALSE;
-	while (test_and_set(sharedptr.lock))
+	sharedptr.lock = TRUE;
+	while (sharedptr.lock)
 	{
-		printf("getmutex on test\n");
+		printf("getmutex on test, lock is %d",lock);
+		sharedptr.lock = test_and_set(lock);
+		/* code */
 	}
 	sharedptr.lock = FALSE;
 }
 
 void releaseMutex(int * lock){
 	// set the mutex back to initial state so that somebody else can claim it
-	printf("release mutex on test\n");
-	sharedptr.lock = FALSE;
+		printf("release mutex on test, lock is %d",lock);	
+		sharedptr.lock = FALSE;
 }
 
