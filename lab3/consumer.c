@@ -45,7 +45,7 @@ int main (int argc, char *argv[]){
 	getMutex(&sharedPtr->lock);
 	int numProd = sharedPtr->numProducers;
 	releaseMutex(&sharedPtr->lock);
-
+	printf("C_initTest_1");
 	int charRead = TRUE;
 	char c;
 	while (numProd != 0 && charRead)
