@@ -44,7 +44,29 @@ int main (int argc, char *argv[]){
 	}
 	
     // put your code here..
-
+	getMutex(&sharedPtr->lock);
+	sharedPtr->numProducers++;
+	releaseMutex(&sharedPtr->lock);
+	while ((c = getchar()) != EOF){
+		stored = FALSE;
+		while (stored == FALSE){
+			getMutex(&sharedPtr->lock);
+			if (sharedPtr->count < BUFFSIZE){	
+				sharedPtr->buffer[sharedPtr->in] = c;
+				sharedPtr->in++;
+				sharedPtr->count++;
+				stored = TRUE;
+				/* code */
+			}
+			releaseMutex(&sharedPtr->lock);
+			/* code */
+		}
+		/* code */
+	}
+	
+	getMutex(&sharedPtr->lock);
+	sharedPtr->numProducers--;
+	releaseMutex(&sharedPtr->lock);
 	return 0;
 }
 
