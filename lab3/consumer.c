@@ -45,7 +45,7 @@ int main (int argc, char *argv[]){
 	printf("C_initTest_in\n");
 	getMutex(&sharedPtr->lock);
 	int numProd = sharedPtr->numProducers;
-	printf("the number of prod is %d", numProd);
+	printf("the number of prod is %d\n", numProd);
 	releaseMutex(&sharedPtr->lock);
 	printf("C_initTest_out\n");
 	int charRead = TRUE;
@@ -58,6 +58,7 @@ int main (int argc, char *argv[]){
 		{
 			getMutex(&sharedPtr->lock);
 			printf("C_whileTest_2\n");
+			printf("charread is %d\n", charRead);
 			if (sharedPtr->buffer[sharedPtr->out] != NULL)
 			{
 				printf("C_startread\n");
