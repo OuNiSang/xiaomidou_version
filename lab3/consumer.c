@@ -59,7 +59,7 @@ int main (int argc, char *argv[]){
 		{
 			getMutex(&sharedPtr->lock);
 			printf("C_whileTest_2\n");
-			printf("2_charread is %d\n", charRead);
+			
 			if (sharedPtr->buffer[sharedPtr->out] != NULL)
 			{
 				printf("C_startread\n");
@@ -78,7 +78,7 @@ int main (int argc, char *argv[]){
 			/* code */
 			putchar(c);
 		}
-		
+		printf("3_charread is %d\n", charRead);
 		/* code */
 	}
 	printf("C_whileTest_3\n");
