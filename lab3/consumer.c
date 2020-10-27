@@ -54,11 +54,12 @@ int main (int argc, char *argv[]){
 	{
 		charRead = FALSE;
 		printf("C_whileTest_1\n");
+		printf("1_charread is %d\n", charRead);
 		while (charRead == FALSE && numProd != 0)
 		{
 			getMutex(&sharedPtr->lock);
 			printf("C_whileTest_2\n");
-			printf("charread is %d\n", charRead);
+			printf("2_charread is %d\n", charRead);
 			if (sharedPtr->buffer[sharedPtr->out] != NULL)
 			{
 				printf("C_startread\n");
