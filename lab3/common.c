@@ -28,7 +28,7 @@ int test_and_set(int * lock){
 void getMutex(int *  lock){
 	// this should not return until it has mutual exclusion. Note that many versions of 
 	// this will probobly be running at the same time.
-	&lock = TRUE;
+	lock = TRUE;
 	while (&lock)
 	{
 		printf("getmutex on test, lock is %d\n",&lock);
@@ -40,7 +40,7 @@ void getMutex(int *  lock){
 
 void releaseMutex(int * lock){
 	// set the mutex back to initial state so that somebody else can claim it
-		printf("release mutex on test, lock is %d\n",lock);	
-		&lock = FALSE;
+		printf("release mutex on test, lock is %d\n",&lock);	
+		lock = FALSE;
 }
 
