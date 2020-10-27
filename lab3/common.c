@@ -36,12 +36,12 @@ void getMutex(int *  lock){
 	// 	/* code */
 	// }
 	// lock = FALSE;
-	*lock = TRUE;
+	// *lock = TRUE;
 	while (test_and_set(lock))
 	{
-		// printf("getmutex on test, lock is %d\n",*lock);
 		/* code */
 	}
+	printf("getmutex on test, lock is %d\n",*lock);
 	
 }
 
