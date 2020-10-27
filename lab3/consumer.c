@@ -42,21 +42,21 @@ int main (int argc, char *argv[]){
 	}
 	
     // put your code here...
-	printf("C_initTest_in");
+	printf("C_initTest_in\n");
 	getMutex(&sharedPtr->lock);
 	int numProd = sharedPtr->numProducers;
 	releaseMutex(&sharedPtr->lock);
-	printf("C_initTest_out");
+	printf("C_initTest_out\n");
 	int charRead = TRUE;
 	char c;
 	while (numProd != 0 && charRead)
 	{
 		charRead = FALSE;
-		printf("C_whileTest_1");
+		printf("C_whileTest_1\n");
 		while (charRead == FALSE && numProd != 0)
 		{
 			getMutex(&sharedPtr->lock);
-			printf("C_whileTest_2");
+			printf("C_whileTest_2\n");
 			if (sharedPtr->count != 0)
 			{
 				c = sharedPtr->buffer[sharedPtr->out];
@@ -76,7 +76,7 @@ int main (int argc, char *argv[]){
 		
 		/* code */
 	}
-	printf("C_whileTest_3");
+	printf("C_whileTest_3\n");
     
 	return 0;
 }
