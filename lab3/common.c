@@ -39,7 +39,7 @@ void getMutex(int *  lock){
 	*lock = TRUE;
 	while (test_and_set(lock))
 	{
-		printf("getmutex on test, lock is %d\n",*lock);
+		// printf("getmutex on test, lock is %d\n",*lock);
 		/* code */
 	}
 	
