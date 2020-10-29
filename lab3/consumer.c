@@ -50,7 +50,7 @@ int main (int argc, char *argv[]){
 	printf("C_initTest_out\n");
 	int charRead = TRUE;
 	char c;
-	while (numProd != 0 && charRead == TRUE)
+	while (numProd != 0 && charRead)
 	{
 		charRead = FALSE;
 		printf("C_whileTest_1\n");

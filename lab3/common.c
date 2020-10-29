@@ -47,7 +47,7 @@ void getMutex(int *  lock){
 
 void releaseMutex(int * lock){
 	// set the mutex back to initial state so that somebody else can claim it
-		printf("release mutex on test, lock is %d\n",*lock);	
 		*lock = FALSE;
+		printf("release mutex on test, lock is %d\n",*lock);	
 }
 
