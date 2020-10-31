@@ -55,7 +55,7 @@ int main (int argc, char *argv[]){
 		charRead = FALSE;
 		// printf("C_whileTest_1\n");
 		// printf("1_charread is %d\n", charRead);
-		while (charRead == FALSE && numProd > 0)
+		while (!charRead && numProd > 0)
 		{
 			getMutex(&sharedPtr->lock);
 			// printf("C_whileTest_2\n");
@@ -75,8 +75,8 @@ int main (int argc, char *argv[]){
 			}
 			releaseMutex(&sharedPtr->lock);
 			/* code */
-			putchar(c);
 		}
+		putchar(c);
 		// printf("3_charread is %d\n", charRead);
 		/* code */
 	}
