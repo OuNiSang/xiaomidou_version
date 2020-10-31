@@ -36,18 +36,18 @@ void getMutex(int *  lock){
 	// 	/* code */
 	// }
 	// lock = FALSE;
-	// *lock = TRUE;
+	*lock = TRUE;
 	while (test_and_set(lock))
 	{
 		/* code */
 	}
-	printf("getmutex on test, lock is %d\n",*lock);
+	// printf("getmutex on test, lock is %d\n",*lock);
 	
 }
 
 void releaseMutex(int * lock){
 	// set the mutex back to initial state so that somebody else can claim it
 		*lock = FALSE;
-		printf("release mutex on test, lock is %d\n",*lock);	
+		// printf("release mutex on test, lock is %d\n",*lock);	
 }
 

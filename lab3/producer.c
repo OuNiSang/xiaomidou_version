@@ -47,14 +47,14 @@ int main (int argc, char *argv[]){
 	getMutex(&sharedPtr->lock);
 	sharedPtr->numProducers++;
 	releaseMutex(&sharedPtr->lock);
-	printf("P_initTest_1\n");
+	// printf("P_initTest_1\n");
 	
 	while ((c = getchar()) != EOF){
 		stored = FALSE;
-		printf("P_whileTest_1\n");
+		// printf("P_whileTest_1\n");
 		while (stored == FALSE){
 			getMutex(&sharedPtr->lock);
-			printf("P_whileTest_2\n");
+			// printf("P_whileTest_2\n");
 			if (sharedPtr->count < BUFFSIZE){	
 				sharedPtr->buffer[sharedPtr->in] = c;
 				sharedPtr->in = (sharedPtr->in + 1 )% BUFFSIZE;
@@ -67,7 +67,7 @@ int main (int argc, char *argv[]){
 		}
 		/* code */
 	}
-	printf("P_whileTest_3\n");
+	// printf("P_whileTest_3\n");
 	getMutex(&sharedPtr->lock);
 	sharedPtr->numProducers--;
 	releaseMutex(&sharedPtr->lock);

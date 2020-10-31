@@ -42,26 +42,26 @@ int main (int argc, char *argv[]){
 	}
 	
     // put your code here...
-	printf("C_initTest_in\n");
+	// printf("C_initTest_in\n");
 	getMutex(&sharedPtr->lock);
 	int numProd = sharedPtr->numProducers;
 	printf("the number of prod is %d\n", numProd);
 	releaseMutex(&sharedPtr->lock);
-	printf("C_initTest_out\n");
+	// printf("C_initTest_out\n");
 	int charRead = TRUE;
 	char c;
 	while (numProd != 0 && charRead)
 	{
 		charRead = FALSE;
-		printf("C_whileTest_1\n");
-		printf("1_charread is %d\n", charRead);
+		// printf("C_whileTest_1\n");
+		// printf("1_charread is %d\n", charRead);
 		while (charRead == FALSE && numProd != 0)
 		{
 			getMutex(&sharedPtr->lock);
-			printf("C_whileTest_2\n");
+			// printf("C_whileTest_2\n");
 			if (sharedPtr->count != 0)
 			{
-				printf("C_startread\n");
+				// printf("C_startread\n");
 				c = sharedPtr->buffer[sharedPtr->out];
 				sharedPtr->out = (sharedPtr->out + 1) % BUFFSIZE;
 				sharedPtr->count --;
@@ -69,7 +69,7 @@ int main (int argc, char *argv[]){
 				/* code */
 			}else
 			{
-				printf("C_endread\n");
+				// printf("C_endread\n");
 				numProd--;
 				/* code */
 			}
@@ -77,10 +77,10 @@ int main (int argc, char *argv[]){
 			/* code */
 			putchar(c);
 		}
-		printf("3_charread is %d\n", charRead);
+		// printf("3_charread is %d\n", charRead);
 		/* code */
 	}
-	printf("C_whileTest_3\n");
+	// printf("C_whileTest_3\n");
     
 	return 0;
 }
