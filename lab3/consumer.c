@@ -25,7 +25,7 @@ int main (int argc, char *argv[]){
 	key_t   key;
 	struct shared    *sharedPtr;
 	int shmid;
-    
+
 	/*	 Shared memory init 	*/
 	key = ftok(".", 'S');
 	if((shmid = shmget(key, MEMSIZE, IPC_CREAT|0666)) == -1 ){
@@ -40,7 +40,7 @@ int main (int argc, char *argv[]){
 	    printf("Couldn't map the memory into our process space.\n");
 	    exit(1);
 	}
-	
+
     // put your code here...
 	// printf("C_initTest_in\n");
 	getMutex(&sharedPtr->lock);
@@ -50,16 +50,16 @@ int main (int argc, char *argv[]){
 	// printf("C_initTest_out\n");
 	int charRead = TRUE;
 	char c;
-	while (numProd != 0 && charRead)
+	while (numProd > 0 && charRead)
 	{
 		charRead = FALSE;
 		// printf("C_whileTest_1\n");
 		// printf("1_charread is %d\n", charRead);
-		while (charRead == FALSE && numProd != 0)
+		while (charRead == FALSE && numProd > 0)
 		{
 			getMutex(&sharedPtr->lock);
 			// printf("C_whileTest_2\n");
-			if (sharedPtr->count != 0)
+			if (sharedPtr->count > 0)
 			{
 				// printf("C_startread\n");
 				c = sharedPtr->buffer[sharedPtr->out];
@@ -81,7 +81,6 @@ int main (int argc, char *argv[]){
 		/* code */
 	}
 	// printf("C_whileTest_3\n");
-    
 	return 0;
 }
 
