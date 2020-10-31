@@ -70,7 +70,7 @@ int main (int argc, char *argv[]){
 			}else
 			{
 				// printf("C_endread\n");
-				numProd--;
+				numProd = sharedPtr->numProducers;
 				/* code */
 			}
 			releaseMutex(&sharedPtr->lock);
