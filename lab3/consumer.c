@@ -59,11 +59,11 @@ int main (int argc, char *argv[]){
 		{
 			getMutex(&sharedPtr->lock);
 			printf("C_whileTest_2\n");
-			if (sharedPtr->buffer[sharedPtr->out] != NULL)
+			if (sharedPtr->count != 0)
 			{
 				printf("C_startread\n");
 				c = sharedPtr->buffer[sharedPtr->out];
-				sharedPtr->out ++;
+				sharedPtr->out = (sharedPtr->out + 1) % BUFFSIZE;
 				sharedPtr->count --;
 				charRead = TRUE;
 				/* code */

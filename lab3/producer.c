@@ -55,13 +55,13 @@ int main (int argc, char *argv[]){
 		while (stored == FALSE){
 			getMutex(&sharedPtr->lock);
 			printf("P_whileTest_2\n");
-			if (sharedPtr->count){	
+			if (sharedPtr->count < BUFFSIZE){	
 				sharedPtr->buffer[sharedPtr->in] = c;
+				sharedPtr->in = (sharedPtr->in + 1 )% BUFFSIZE;
+				sharedPtr->count++;
 				stored = TRUE;
 				/* code */
 			}
-			sharedPtr->in++;
-			sharedPtr->count++;
 			releaseMutex(&sharedPtr->lock);
 			/* code */
 		}
