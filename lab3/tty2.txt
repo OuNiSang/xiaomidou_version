@@ -1,4 +1,0 @@
-Script started on Sun 01 Nov 2020 06:55:04 PM EST
-student@ELEC377-Student:~/elec377-group-50/lab3$ producer <test01in.txt 
-student@ELEC377-Student:~/elec377-group-50/lab3$ exit
-Script done on Sun 01 Nov 2020 06:56:35 PM EST
