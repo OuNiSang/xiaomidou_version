@@ -1,5 +1,5 @@
-Script started on Sun 01 Nov 2020 06:42:52 PM EST
-student@ELEC377-Student:~/elec377-group-50/lab3$ p consumer >test02out.txt
+Script started on Sun 01 Nov 2020 06:55:05 PM EST
+student@ELEC377-Student:~/elec377-group-50/lab3$ consumer >test02out.txt 
+student@ELEC377-Student:~/elec377-group-50/lab3$ consumer >test02.1out.txt 
 student@ELEC377-Student:~/elec377-group-50/lab3$ exit
-
-Script done on Sun 01 Nov 2020 06:44:52 PM EST
+Script done on Sun 01 Nov 2020 06:56:37 PM EST
